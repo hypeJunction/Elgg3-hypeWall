@@ -158,12 +158,12 @@ foreach ($friend_guids as $friend_guid) {
 			$friend_wall_tag->relationship_id = $new_tag;
 			$friend_wall_tag->save();
 
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/relationship/tagged/create',
 				'action_type' => 'tagged',
 				'subject_guid' => $friend->guid,
 				'object_guid' => $friend_wall_tag->guid,
-			));
+			]);
 		}
 		elgg_set_ignore_access($ia);
 	}
@@ -206,34 +206,34 @@ $make_bookmark();
 
 if ($action == 'create') {
 	// Create a river entry for this wall post
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/hjwall/create',
 		'action_type' => 'create',
 		'subject_guid' => $post->owner_guid,
 		'object_guid' => $post->guid,
 		'target_guid' => $post->container_guid,
-	));
+	]);
 
 	// Trigger a publish event, so that we can send out notifications
 	elgg_trigger_event('publish', 'object', $post);
 }
 
-$params = array(
+$params = [
 	'entity' => $post,
 	'user' => $poster,
 	'message' => $status,
 	'url' => $post->getURL(),
 	'origin' => 'wall',
-);
+];
 elgg_trigger_plugin_hook('status', 'user', $params);
 
 $data = '';
 if (elgg_is_xhr()) {
-	$data = elgg_list_river(array(
+	$data = elgg_list_river([
 		'object_guids' => $post->guid,
 		'pagination' => false,
 		'limit' => 0,
-	));
+	]);
 }
 
 $msg = elgg_echo('wall:create:success');

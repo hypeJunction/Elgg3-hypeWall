@@ -4,9 +4,9 @@
 	"license": "GPL-2.0",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:hypeJunction/hypeWall.git",
+		"url": "git@github.com:hypeJunction/Elgg3-hypeWall.git",
 		"owner": "hypeJunction",
-		"repo": "hypeWall"
+		"repo": "Elgg3-hypeWall"
 	},
 	"devDependencies": {
 		"curlrequest": "^0.3.10",

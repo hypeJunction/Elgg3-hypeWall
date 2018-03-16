@@ -2,7 +2,7 @@
 /**
  * Displays a list of attached entities
  * First shows a gallery/grid of images, followed by a list of other entities
- * 
+ *
  * @uses $vars['entity'] Entity, whose attachments are being displayed
  */
 if (!is_callable('hypeapps_get_attachments')) {

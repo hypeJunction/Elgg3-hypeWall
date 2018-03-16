@@ -28,19 +28,19 @@ if ($attachments) {
 
 $menu = '';
 if (!elgg_in_context('widgets')) {
-	$menu = elgg_view_menu('entity', array(
+	$menu = elgg_view_menu('entity', [
 		'entity' => $entity,
 		'handler' => 'wall',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz',
-	));
+	]);
 }
 
 $subtitle = $entity->formatSummary();
-$user_icon = elgg_view_entity_icon($poster, 'medium', array(
+$user_icon = elgg_view_entity_icon($poster, 'medium', [
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
-		));
+		]);
 
 if (elgg_extract('full_view', $vars, false)) {
 	$summary = elgg_view('object/elements/summary', [

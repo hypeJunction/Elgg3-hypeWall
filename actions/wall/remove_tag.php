@@ -17,11 +17,11 @@ if (!$relationship instanceof \ElggRelationship) {
 $id = $relationship->id;
 $relationship->delete();
 
-elgg_delete_river(array(
+elgg_delete_river([
 	'subject_guids' => $user->guid,
 	'object_guids' => $post->guid,
 	'action_types' => 'tagged',
-));
+]);
 
 $friend_wall_tags = elgg_get_entities([
 	'types' => 'object',

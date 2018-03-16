@@ -10,7 +10,7 @@
 $entity = elgg_extract('entity', $vars);
 $guid = (int) $entity->guid;
 
-$post_guids = (array) elgg_extract('post_guids', $vars, array());
+$post_guids = (array) elgg_extract('post_guids', $vars, []);
 $post_guids = array_filter($post_guids);
 
 if (empty($post_guids)) {
@@ -21,20 +21,21 @@ if (empty($post_guids)) {
 	$no_results = elgg_echo('wall:notfound');
 }
 
-$base_url = elgg_http_add_url_query_elements(elgg_normalize_url("wall/$entity->guid"), array(
+$base_url = elgg_generate_url('collection:object:hjwall', [
+	'guid' => $entity->guid,
 	'post_guids' => $post_guids,
-		));
+]);
 
-$list_class = (array) elgg_extract('list_class', $vars, array());
+$list_class = (array) elgg_extract('list_class', $vars, ['elgg-list-river']);
 $list_class[] = 'wall-post-list';
 
-$item_class = (array) elgg_extract('item_class', $vars, array());
+$item_class = (array) elgg_extract('item_class', $vars, []);
 $item_class[] = 'wall-post clearfix';
 
 $dbprefix = elgg_get_config('dbprefix');
 
-$options = (array) elgg_extract('options', $vars, array());
-$list_options = array(
+$options = (array) elgg_extract('options', $vars, []);
+$list_options = [
 	'full_view' => true,
 	'limit' => elgg_extract('limit', $vars, elgg_get_config('default_limit')) ? : 10,
 	'list_class' => implode(' ', $list_class),
@@ -45,18 +46,29 @@ $list_options = array(
 	'base_url' => $base_url,
 	'list_id' => "wall-$guid",
 	//'auto_refresh' => 30,
-);
+];
 
-$getter_options = array(
+$getter_options = [
 	'types' => 'object',
 	'subtypes' => hypeJunction\Wall\Post::SUBTYPE,
 	'object_guids' => $object_guids,
-	'action_types' => array('create'),
-	'wheres' => array(
-		"({$guid} = rv.target_guid
-				OR EXISTS (SELECT 1 FROM {$dbprefix}entity_relationships WHERE guid_one = {$guid} AND relationship = 'tagged_in' AND guid_two = rv.object_guid))",
-	),
-);
+	'action_types' => ['create'],
+	'wheres' => function(\Elgg\Database\QueryBuilder $qb) use ($guid) {
+		$ors = [];
+
+		$ors[] = $qb->compare('rv.target_guid', '=', $guid, ELGG_VALUE_INTEGER);
+
+		$subquery = $qb->subquery('entity_relationships')
+			->select(1)
+			->where($qb->compare('guid_one', '=', $guid, ELGG_VALUE_INTEGER))
+			->andWhere($qb->compare('relationship', '=', 'tagged_in', ELGG_VALUE_STRING))
+			->andWhere($qb->compare('guid_two', '=', 'rv.object_guid'));
+
+		$ors[] = "EXISTS ({$subquery->getSQL()})";
+
+		return $qb->merge($ors, 'OR');
+	},
+];
 
 $options = array_merge($list_options, $options, $getter_options);
 

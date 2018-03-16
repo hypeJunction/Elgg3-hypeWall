@@ -15,7 +15,6 @@ if ($char_limit > 0) {
 		'class' => 'wall-status-counter',
 		'data-counter' => '',
 	], $indicator);
-
 }
 
 echo elgg_view('input/plaintext', $vars);

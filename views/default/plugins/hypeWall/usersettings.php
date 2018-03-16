@@ -21,9 +21,9 @@ if (elgg_get_plugin_setting('third_party_wall', 'hypeWall')) {
 		'#label' => elgg_echo('wall:usersettings:third_party_wall'),
 		'name' => 'params[third_party_wall]',
 		'value' => elgg_get_plugin_user_setting('third_party_wall', $user->guid, 'hypeWall'),
-		'options_values' => array(
+		'options_values' => [
 			0 => elgg_echo('option:no'),
 			1 => elgg_echo('option:yes'),
-		)
+		]
 	]);
 }

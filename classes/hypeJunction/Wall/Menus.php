@@ -2,6 +2,7 @@
 
 namespace hypeJunction\Wall;
 
+use Elgg\Hook;
 use ElggMenuItem;
 use ElggRiverItem;
 
@@ -26,28 +27,28 @@ class Menus {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'remove_tag',
 						'text' => elgg_echo('wall:remove_tag'),
 						'title' => elgg_echo('wall:remove_tag'),
 						'priority' => 800,
 						'href' => "action/wall/remove_tag?guid=$entity->guid",
 						'is_action' => true,
-			));
+			]);
 		}
 
 		if ($entity->canEdit()) {
-			$return[] = ElggMenuItem::factory(array(
-						'name' => 'edit',
-						'text' => elgg_echo('edit'),
-						'title' => elgg_echo('wall:edit'),
-						'priority' => 800,
-						'href' => "wall/edit/$entity->guid",
-			));
+			$return[] = ElggMenuItem::factory([
+				'name' => 'edit',
+				'text' => elgg_echo('edit'),
+				'title' => elgg_echo('wall:edit'),
+				'priority' => 800,
+				'href' => "wall/edit/$entity->guid",
+			]);
 		}
 
 		if ($entity->canDelete()) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
 						'text' => elgg_view_icon('delete'),
 						'title' => elgg_echo('wall:delete'),
@@ -55,7 +56,7 @@ class Menus {
 						'href' => "action/entity/delete?guid=$entity->guid",
 						'is_action' => true,
 						'confirm' => true,
-			));
+			]);
 		}
 
 		return $return;
@@ -86,28 +87,28 @@ class Menus {
 
 		$logged_in = elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'remove_tag',
 						'text' => elgg_echo('wall:remove_tag'),
 						'title' => elgg_echo('wall:remove_tag'),
 						'priority' => 800,
 						'href' => "action/wall/remove_tag?guid=$object->guid",
 						'is_action' => true,
-			));
+			]);
 		}
 
 		if ($object->canEdit()) {
-			$return[] = ElggMenuItem::factory(array(
-						'name' => 'edit',
-						'text' => elgg_echo('edit'),
-						'title' => elgg_echo('wall:edit'),
-						'priority' => 800,
-						'href' => "wall/edit/$object->guid",
-			));
+			$return[] = ElggMenuItem::factory([
+				'name' => 'edit',
+				'text' => elgg_echo('edit'),
+				'title' => elgg_echo('wall:edit'),
+				'priority' => 800,
+				'href' => "wall/edit/$object->guid",
+			]);
 		}
 
 		if ($object->canDelete()) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
 						'text' => elgg_view_icon('delete'),
 						'title' => elgg_echo('wall:delete'),
@@ -115,7 +116,7 @@ class Menus {
 						'href' => "action/entity/delete?guid=$object->guid",
 						'is_action' => true,
 						'confirm' => true,
-			));
+			]);
 		}
 
 		return $return;
@@ -135,17 +136,17 @@ class Menus {
 		$entity = elgg_extract('entity', $params);
 
 		if (elgg_instanceof($entity, 'user')) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => elgg_echo('wall'),
 						'href' => "wall/owner/{$entity->username}",
-			));
+			]);
 		} else if (elgg_instanceof($entity, 'group') && $entity->wall_enable == 'yes') {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => elgg_echo('wall:groups'),
 						'href' => "wall/group/{$entity->guid}",
-			));
+			]);
 		}
 
 		return $return;
@@ -164,11 +165,13 @@ class Menus {
 		$entity = elgg_extract('entity', $params);
 
 		if (elgg_instanceof($entity, 'user')) {
-			$return[] = ElggMenuItem::factory(array(
+			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
 						'href' => "wall/owner/{$entity->username}",
-			));
+						'section' => 'action',
+						'icon' => 'comments-o',
+			]);
 		}
 		return $return;
 	}
@@ -204,5 +207,43 @@ class Menus {
 		]);
 
 		return $return;
+	}
+
+	public static function setupQuickLinks(Hook $hook) {
+
+		$items = $hook->getValue();
+
+		$entity = $hook->getEntityParam();
+		if (!$entity || !$entity->canWriteToContainer()) {
+			return;
+		}
+
+		$types = get_registered_entity_types('object');
+
+		if (empty($types)) {
+			return;
+		}
+
+		foreach ($types as $type) {
+			try {
+				$url = elgg_generate_url("add:object:$type", [
+					'guid' => $entity->guid,
+				]);
+			} catch (\Exception $ex) {
+			}
+
+			if (!$url) {
+				continue;
+			}
+
+			$items[] = ElggMenuItem::factory([
+				'name' => $type,
+				'href' => $url,
+				'text' => elgg_echo("add:object:$type"),
+			]);
+		}
+
+		return $items;
+
 	}
 }

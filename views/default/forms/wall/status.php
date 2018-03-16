@@ -1,15 +1,5 @@
 <?php
 
-elgg_register_menu_item('wall-filter', array(
-	'name' => 'status',
-	'text' => elgg_view_icon('comment', ['class' => 'wall-icon wall-icon-status']),
-	'title' => elgg_echo('wall:status'),
-	'href' => '#wall-form-status',
-	'link_class' => 'wall-tab',
-	'selected' => true,
-	'priority' => 100
-));
-
 $entity = elgg_extract('entity', $vars);
 
 $tools = [];
@@ -27,7 +17,6 @@ $fields[] = [
 ];
 
 if (elgg_get_plugin_setting('url', 'hypeWall')) {
-
 	$value = $entity ? $entity->address : get_input('address');
 	$fields[] = [
 		'#type' => 'wall/url',
@@ -46,11 +35,11 @@ if (elgg_get_plugin_setting('url', 'hypeWall')) {
 		'title' => elgg_echo('wall:url'),
 		'data-section' => '.wall-field-url',
 		'item_class' => $value ? 'hidden' : '',
+		'link_class' => 'elgg-tooltip',
 	];
 }
 
 if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeAttachments')) {
-
 	$fields[] = [
 		'#type' => 'wall/file',
 		'#label' => elgg_echo('wall:photo'),
@@ -64,6 +53,7 @@ if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeA
 		'name' => 'add-photo',
 		'text' => elgg_view_icon('camera'),
 		'title' => elgg_echo('wall:photo'),
+		'link_class' => 'elgg-tooltip',
 		'data-section' => '.wall-field-photo',
 	];
 }
@@ -82,6 +72,7 @@ if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hyp
 		'name' => 'add-content',
 		'text' => elgg_view_icon('clipboard'),
 		'title' => elgg_echo('wall:attachment'),
+		'link_class' => 'elgg-tooltip',
 		'data-section' => '.wall-field-content',
 	];
 }
@@ -113,6 +104,7 @@ if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
 		'title' => elgg_echo('wall:location'),
 		'data-section' => '.wall-field-location',
 		'item_class' => $value ? 'hidden' : '',
+		'link_class' => 'elgg-tooltip',
 	];
 }
 
@@ -129,6 +121,7 @@ if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
 		'name' => 'tag-friends',
 		'text' => elgg_view_icon('user-plus'),
 		'title' => elgg_echo('wall:tag_friends'),
+		'link_class' => 'elgg-tooltip',
 		'data-section' => '.wall-field-friends',
 	];
 }
@@ -151,6 +144,7 @@ if (elgg_get_plugin_setting('tags', 'hypeWall')) {
 		'title' => elgg_echo('wall:tags'),
 		'data-section' => '.wall-field-tags',
 		'item_class' => $value ? 'hidden' : '',
+		'link_class' => 'elgg-tooltip',
 	];
 }
 
@@ -181,28 +175,32 @@ echo elgg_view('output/attachments', [
 ]);
 
 $footer = elgg_view_menu('wall-tools', [
-	'class' => 'elgg-menu-hz float',
+	'class' => 'elgg-menu-hz',
 	'sort_by' => 'priority',
 	'items' => $tools,
 	'entity' => $entity,
 		]);
 
+$controls = [
+	[
+		'#type' => 'access',
+		'name' => 'access_id',
+		'value' => $entity ? $entity->access_id : get_default_access(),
+		'class' => 'wall-access',
+	],
+	[
+		'#type' => 'submit',
+		'value' => elgg_echo('wall:post'),
+	],
+];
+
+$controls = elgg_trigger_plugin_hook('controls', 'wall', $vars, $controls);
 $footer .= elgg_view_field([
 	'#type' => 'fieldset',
 	'align' => 'horizontal',
 	'justify' => 'right',
-	'fields' => [
-		[
-			'#type' => 'access',
-			'name' => 'access_id',
-			'value' => $entity ? $entity->access_id : get_default_access(),
-			'class' => 'wall-access',
-		],
-		[
-			'#type' => 'submit',
-			'value' => elgg_echo('wall:post'),
-		],
-	],
+	'class' => 'wall-footer-controls',
+	'fields' => $controls,
 		]);
 
 elgg_set_form_footer($footer);

@@ -18,7 +18,6 @@ define(function (require) {
 			$('.wall-form').removeAttr('onsubmit')
 
 			$(document).on('click.wall', '.wall-find-me', wall.findMe);
-			$(document).on('click.wall', '.wall-tab', wall.switchTab);
 			$(document).on('keyup.wall keydown.wall', 'textarea[data-limit]', wall.updateCounter);
 			$(document).on('keyup.wall', '.wall-input-status', wall.parseUrl);
 			$(document).on('blur.wall focusout.wall preview.wall clear.wall', '.wall-url', wall.loadUrlPreview);
@@ -54,19 +53,6 @@ define(function (require) {
 					}
 				});
 			});
-		},
-		/**
-		 * Switch wall form when tab link is clicked
-		 * @param object e
-		 * @returns void
-		 */
-		switchTab: function (e) {
-			e.preventDefault();
-			var $tab = $(this);
-			$tab.closest('li').toggleClass('elgg-state-selected').siblings().removeClass('elgg-state-selected');
-			var $form = $($tab.attr('href'));
-			$('.wall-form').addClass('hidden');
-			$form.removeClass('hidden');
 		},
 		/**
 		 * Parse URLs from the user input and add them to the URL input field
@@ -169,12 +155,19 @@ define(function (require) {
 							var href = $(this).data('section');
 							$(href, $form).addClass('hidden');
 						});
-						if ($('.elgg-list-river,.wall-post-list').length > 1) {
-							$('[data-list-id="wall-' + elgg.get_page_owner_guid() + '"] > .elgg-list').children('.elgg-list').trigger('addFetchedItems', [data.output, null, true]);
+
+						if ($form.is('.wall-has-lists-api')) {
+							if ($('.elgg-list-river,.wall-post-list').length > 1) {
+								$('[data-list-id="wall-' + elgg.get_page_owner_guid() + '"] > .elgg-list')
+									.children('.elgg-list')
+									.trigger('addFetchedItems', [data.output, null, true]);
+							} else {
+								$('.elgg-list-river,.wall-post-list').trigger('addFetchedItems', [data.output, null, true]);
+							}
+							$('.elgg-list-river,.wall-post-list').trigger('refresh', [null, false]);
 						} else {
-							$('.elgg-list-river,.wall-post-list').trigger('addFetchedItems', [data.output, null, true]);
+							$('.elgg-list-river,.wall-post-list').prepend($(data.output).children('li'));
 						}
-						$('.elgg-list-river,.wall-post-list').trigger('refresh', [null, false]);
 					}
 					if (data.system_messages) {
 						elgg.register_error(data.system_messages.error);
@@ -214,3 +207,4 @@ define(function (require) {
 	};
 	return wall;
 });
+

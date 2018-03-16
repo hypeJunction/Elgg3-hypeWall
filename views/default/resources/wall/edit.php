@@ -3,28 +3,34 @@
 use hypeJunction\Wall\Post;
 
 $guid = elgg_extract('guid', $vars);
+
 elgg_entity_gatekeeper($guid, 'object', Post::SUBTYPE);
 
 $entity = get_entity($guid);
 if (!$entity->canEdit()) {
-	forward('', '403');
+	throw new \Elgg\EntityPermissionsException();
 }
 
-$container = $entity->getContainerEntity();
-if ($container) {
-	$title = elgg_echo('wall:owner', [$container->getDisplayName()]);
-	elgg_push_breadcrumb($title, "wall/$container->guid");
-	elgg_set_page_owner_guid($container->guid);
-}
+elgg_push_entity_breadcrumbs($entity);
 
 $title = elgg_echo('wall:edit');
-$content = elgg_view('framework/wall/container', [
+
+$form = elgg_view('framework/wall/container', [
 	'entity' => $entity,
 ]);
 
-$layout = elgg_view_layout('one_sidebar', [
+$content =  elgg_format_element('div', [
+	'class' => [
+		'wall-component',
+		'wall-to-wall',
+	],
+], $form);
+
+$layout = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
+	'filter_id' => 'wall/edit',
+	'class' => 'elgg-river-layout',
 ]);
 
 echo elgg_view_page($title, $layout);

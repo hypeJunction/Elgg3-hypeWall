@@ -38,32 +38,32 @@ class Notifications {
 		$target = elgg_echo("wall:target:{$entity->getSubtype()}");
 
 		if ($poster->guid == $wall_owner->guid) {
-			$ownership = elgg_echo('wall:ownership:own', array($target), $language);
+			$ownership = elgg_echo('wall:ownership:own', [$target], $language);
 		} else if ($wall_owner->guid == $recipient->guid) {
-			$ownership = elgg_echo('wall:ownership:your', array($target), $language);
+			$ownership = elgg_echo('wall:ownership:your', [$target], $language);
 		} else {
-			$ownership = elgg_echo('wall:ownership:owner', array($wall_owner->name, $target), $language);
+			$ownership = elgg_echo('wall:ownership:owner', [$wall_owner->name, $target], $language);
 		}
 
-		$poster_url = elgg_view('output/url', array(
+		$poster_url = elgg_view('output/url', [
 			'text' => $poster->name,
 			'href' => $poster->getURL(),
-		));
+		]);
 
-		$ownership_url = elgg_view('output/url', array(
+		$ownership_url = elgg_view('output/url', [
 			'text' => $ownership,
 			'href' => $entity->getURL(),
-		));
+		]);
 
-		$notification->summary = elgg_echo('wall:new:notification:subject', array($poster_url, $ownership_url), $language);
+		$notification->summary = elgg_echo('wall:new:notification:subject', [$poster_url, $ownership_url], $language);
 		$notification->subject = strip_tags($notification->summary);
 
-		$notification->body = elgg_echo('wall:new:notification:message', array(
+		$notification->body = elgg_echo('wall:new:notification:message', [
 			$poster_url,
 			$ownership_url,
 			$entity->formatMessage(true),
 			$entity->getURL()
-		), $language);
+		], $language);
 
 		return $notification;
 	}
@@ -87,7 +87,7 @@ class Notifications {
 		$container = $entity->getContainerEntity();
 		$message = $entity->formatMessage(true);
 
-		$sent = array(elgg_get_logged_in_user_guid(), $poster->guid, $container->guid);
+		$sent = [elgg_get_logged_in_user_guid(), $poster->guid, $container->guid];
 
 		// Notify wall owner
 		if ($poster->guid !== $container->guid && $container instanceof ElggUser) {
@@ -96,32 +96,32 @@ class Notifications {
 
 			$language = $container->language;
 
-			$target = elgg_echo("wall:target:{$entity->getSubtype()}", array(), $language);
-			$target_url = elgg_view('output/url', array(
+			$target = elgg_echo("wall:target:{$entity->getSubtype()}", [], $language);
+			$target_url = elgg_view('output/url', [
 				'text' => $target,
 				'href' => $entity->getURL(),
-			));
+			]);
 
-			$ownership = elgg_echo('wall:ownership:your', array($target_url), $language);
+			$ownership = elgg_echo('wall:ownership:your', [$target_url], $language);
 
-			$poster_url = elgg_view('output/url', array(
+			$poster_url = elgg_view('output/url', [
 				'text' => $poster->name,
 				'href' => $poster->getURL(),
-			));
-			$summary = elgg_echo('wall:new:notification:subject', array($poster_url, $ownership), $language);
+			]);
+			$summary = elgg_echo('wall:new:notification:subject', [$poster_url, $ownership], $language);
 			$subject = strip_tags($summary);
-			$body = elgg_echo('wall:new:notification:message', array(
+			$body = elgg_echo('wall:new:notification:message', [
 				$poster_url,
 				$ownership,
 				$message,
 				$entity->getURL()
-			), $language);
+			], $language);
 
-			notify_user($to_guid, $from_guid, $subject, $body, array(
+			notify_user($to_guid, $from_guid, $subject, $body, [
 				'summary' => $summary,
 				'object' => $entity,
 				'action' => 'received',
-			));
+			]);
 		}
 
 		// Notify tagged users
@@ -139,28 +139,28 @@ class Notifications {
 			$to_guid = $tagged_friend->guid;
 			$from_guid = $poster->guid;
 
-			$poster_url = elgg_view('output/url', array(
+			$poster_url = elgg_view('output/url', [
 				'text' => $poster->name,
 				'href' => $poster->getURL(),
-			));
-			$post_url = elgg_view('output/url', array(
-				'text' => elgg_echo('wall:tagged:post', array(), $language),
+			]);
+			$post_url = elgg_view('output/url', [
+				'text' => elgg_echo('wall:tagged:post', [], $language),
 				'href' => $entity->getURL(),
-			));
+			]);
 
-			$summary = elgg_echo('wall:tagged:notification:subject', array($poster_url, $post_url), $language);
+			$summary = elgg_echo('wall:tagged:notification:subject', [$poster_url, $post_url], $language);
 			$subject = strip_tags($subject);
-			$body = elgg_echo('wall:tagged:notification:message', array(
+			$body = elgg_echo('wall:tagged:notification:message', [
 				$poster_url,
 				$message,
 				$post_url
-			), $language);
+			], $language);
 
-			notify_user($to_guid, $from_guid, $subject, $body, array(
+			notify_user($to_guid, $from_guid, $subject, $body, [
 				'summary' => $summary,
 				'object' => $entity,
 				'action' => 'tagged',
-			));
+			]);
 		}
 
 		return true;

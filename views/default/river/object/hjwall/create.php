@@ -12,13 +12,16 @@ if (!$object instanceof Post) {
 	return;
 }
 
-echo elgg_view('river/item', array(
-	'item' => $item,
+$item_vars = [
 	'summary' => $object->formatSummary(),
 	'message' => $object->formatMessage(),
 	'attachments' => $object->formatAttachments(),
-));
+];
 
-echo elgg_view('notifier/view_listener', array(
+$vars = array_merge($vars, $item_vars);
+
+echo elgg_view('river/elements/layout', $vars);
+
+echo elgg_view('notifier/view_listener', [
 	'entity' => $object,
-));
+]);

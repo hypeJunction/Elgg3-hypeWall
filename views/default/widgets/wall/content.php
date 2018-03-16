@@ -15,24 +15,26 @@ if (!$owner) {
 }
 
 $pagination = elgg_is_active_plugin('hypeLists');
-$content .= elgg_view('lists/wall', array(
+$content .= elgg_view('lists/wall', [
 	'entity' => $owner,
-	'options' => array(
+	'options' => [
 		'limit' => $entity->num_display,
 		'list_class' => 'wall-post-list wall-widget-list',
 		'pagination' => $pagination,
 		'pagination_type' => 'infinite',
-	),
-		));
+	],
+]);
 
 if (!$pagination) {
-	$wall_link = elgg_view('output/url', array(
-		'href' => "wall/$owner->guid",
+	$wall_link = elgg_view('output/url', [
+		'href' => elgg_generate_url('collection:object:hjwall', [
+			'guid' => $owner->guid,
+		]),
 		'text' => elgg_echo('wall:moreposts'),
 		'is_trusted' => true,
-	));
+	]);
 
-	$content .= elgg_format_element('span', array('class' => 'elgg-widget-more'), $wall_link);
+	$content .= elgg_format_element('span', ['class' => 'elgg-widget-more'], $wall_link);
 }
 
 echo $content;

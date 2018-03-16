@@ -1,8 +1,9 @@
 <?php
 
-$english = array(
+return [
 
-	'item:object:hjwall' => 'Wall posts',
+	'item:object:hjwall' => 'Wall post',
+	'collection:object:hjwall' => 'Wall posts',
 	
 	'wall' => 'Wall',
 
@@ -147,7 +148,8 @@ $english = array(
 	'wall:groups:post' => 'Post',
 
 	'hypeWall:usersettings:title' => 'Wall',
-	
-);
 
-add_translation("en", $english);
+	'wall:quick_links' => 'Add content',
+	'wall:quick_links:add' => 'Add %s',
+
+];

@@ -24,29 +24,29 @@ $view_item = function($wall_post) use ($item) {
 		return;
 	}
 
-	$tagged_user_link = elgg_view('output/url', array(
+	$tagged_user_link = elgg_view('output/url', [
 		'text' => $tagged_user->name,
 		'href' => $tagged_user->getURL(),
-	));
+	]);
 
-	$poster_link = elgg_view('output/url', array(
+	$poster_link = elgg_view('output/url', [
 		'text' => $poster->name,
 		'href' => $poster->getURL(),
-	));
+	]);
 
-	$wall_post_link = elgg_view('output/url', array(
+	$wall_post_link = elgg_view('output/url', [
 		'text' => elgg_echo('wall:tag:river:post'),
 		'href' => $wall_post->getURL(),
-	));
+	]);
 
 	$summary = elgg_echo('wall:tag:river', [$poster_link, $tagged_user_link, $wall_post_link]);
 
-	return elgg_view('river/item', array(
+	return elgg_view('river/item', [
 		'item' => $item,
 		'summary' => $summary,
 		'message' => $wall_post->formatMessage(),
 		'attachments' => $wall_post->formatAttachments(),
-	));
+	]);
 };
 
 if ($wall_post->getSubtype() == 'wall_tag') {
