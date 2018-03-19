@@ -1,3 +1,58 @@
+<a name="6.0.0"></a>
+# 6.0.0 (2018-03-19)
+
+
+### Bug Fixes
+
+* **action:** access_id is now set properly ([fd2a7db](https://github.com/hypeJunction/Elgg3-hypeWall/commit/fd2a7db)), closes [#67](https://github.com/hypeJunction/Elgg3-hypeWall/issues/67)
+* **action:** use correct input value for description ([6d23b90](https://github.com/hypeJunction/Elgg3-hypeWall/commit/6d23b90)), closes [#91](https://github.com/hypeJunction/Elgg3-hypeWall/issues/91)
+* **actions:** forward to container wall page upon save ([31e3279](https://github.com/hypeJunction/Elgg3-hypeWall/commit/31e3279))
+* **actions:** use correct action path for delete action ([18c614c](https://github.com/hypeJunction/Elgg3-hypeWall/commit/18c614c))
+* **activate:** remove redundant wire subtype class registration ([b8b5bf4](https://github.com/hypeJunction/Elgg3-hypeWall/commit/b8b5bf4)), closes [#90](https://github.com/hypeJunction/Elgg3-hypeWall/issues/90)
+* **composer:** update dependencies ([911f0c1](https://github.com/hypeJunction/Elgg3-hypeWall/commit/911f0c1))
+* **composer:** update dependencies ([09be197](https://github.com/hypeJunction/Elgg3-hypeWall/commit/09be197))
+* **core:** fix references to plugin id ([31bae50](https://github.com/hypeJunction/Elgg3-hypeWall/commit/31bae50))
+* **css:** play well with chosen plugins ([c455ff9](https://github.com/hypeJunction/Elgg3-hypeWall/commit/c455ff9))
+* **forms:** improved edit post experience ([5a0d439](https://github.com/hypeJunction/Elgg3-hypeWall/commit/5a0d439))
+* **forms:** use correct input value for location ([b1ae1e3](https://github.com/hypeJunction/Elgg3-hypeWall/commit/b1ae1e3))
+* **grunt:** update automated releases ([d9a56f8](https://github.com/hypeJunction/Elgg3-hypeWall/commit/d9a56f8))
+* **input:** do not strip tags from the status ([9bf63b4](https://github.com/hypeJunction/Elgg3-hypeWall/commit/9bf63b4))
+* **js:** add missing length check ([9107f01](https://github.com/hypeJunction/Elgg3-hypeWall/commit/9107f01))
+* **js:** ensure that post action does not wrap the list ([27a5f0c](https://github.com/hypeJunction/Elgg3-hypeWall/commit/27a5f0c))
+* **js:** river is once again instantly updated when hypeLists is enabled ([3712ff3](https://github.com/hypeJunction/Elgg3-hypeWall/commit/3712ff3))
+* **languages:** add missing widget description string ([4e81e46](https://github.com/hypeJunction/Elgg3-hypeWall/commit/4e81e46))
+* **languages:** fix plugin name appearance in user settings ([14f2c19](https://github.com/hypeJunction/Elgg3-hypeWall/commit/14f2c19))
+* **lists:** always enable pagination if hypeLists is enabled ([76704b1](https://github.com/hypeJunction/Elgg3-hypeWall/commit/76704b1)), closes [#71](https://github.com/hypeJunction/Elgg3-hypeWall/issues/71)
+* **lists:** constrain lists by container ([829c3cd](https://github.com/hypeJunction/Elgg3-hypeWall/commit/829c3cd))
+* **menus:** fix usersettings menu label ([7b8330d](https://github.com/hypeJunction/Elgg3-hypeWall/commit/7b8330d))
+* **menus:** wall tools menu now receives the entity ([7ece1f2](https://github.com/hypeJunction/Elgg3-hypeWall/commit/7ece1f2))
+* **notifications:** fix bugs and improve formatting ([26473ba](https://github.com/hypeJunction/Elgg3-hypeWall/commit/26473ba))
+* **notifications:** fix bugs and improve formatting ([531a95f](https://github.com/hypeJunction/Elgg3-hypeWall/commit/531a95f))
+* **notifications:** fix bugs and improve formatting ([6c9167a](https://github.com/hypeJunction/Elgg3-hypeWall/commit/6c9167a))
+* **notifications:** mark wall post as read with notifier when river view is rendered ([a3f7028](https://github.com/hypeJunction/Elgg3-hypeWall/commit/a3f7028))
+* **output:** output wall status via longtext output ([fcab534](https://github.com/hypeJunction/Elgg3-hypeWall/commit/fcab534))
+* **pages:** move group wall page to a resource view ([092e5f1](https://github.com/hypeJunction/Elgg3-hypeWall/commit/092e5f1))
+* **permissions:** ElggUser alias included for correct checks ([9927758](https://github.com/hypeJunction/Elgg3-hypeWall/commit/9927758))
+* **photos:** fix issues with processing file uploads ([ab5f001](https://github.com/hypeJunction/Elgg3-hypeWall/commit/ab5f001)), closes [#27](https://github.com/hypeJunction/Elgg3-hypeWall/issues/27)
+* **posts:** make wall posts likeable ([eddecba](https://github.com/hypeJunction/Elgg3-hypeWall/commit/eddecba))
+* **router:** variable mismatch causes broken pages ([548eb0e](https://github.com/hypeJunction/Elgg3-hypeWall/commit/548eb0e))
+* **upgrade:** upgrade scripts now run as they should ([eebbbcc](https://github.com/hypeJunction/Elgg3-hypeWall/commit/eebbbcc))
+* **views:** add missing namespace ([f97870f](https://github.com/hypeJunction/Elgg3-hypeWall/commit/f97870f))
+* **views:** object listing no longer calls removed functions ([f6b962d](https://github.com/hypeJunction/Elgg3-hypeWall/commit/f6b962d))
+
+
+### Features
+
+* **ajax:** instantly update wall list on ajax ([f76dc08](https://github.com/hypeJunction/Elgg3-hypeWall/commit/f76dc08))
+* **format:** add hooks to format summary and attachments ([80bc992](https://github.com/hypeJunction/Elgg3-hypeWall/commit/80bc992))
+* **lists:** all lists are now rendered in a uniform manner ([93fbdf8](https://github.com/hypeJunction/Elgg3-hypeWall/commit/93fbdf8))
+* **releases:** upgrade for Elgg 3.0 ([937d556](https://github.com/hypeJunction/Elgg3-hypeWall/commit/937d556))
+* **releases:** upgrade to Elgg 2.3 ([4b76c9f](https://github.com/hypeJunction/Elgg3-hypeWall/commit/4b76c9f))
+* **wall:** add option to repost cards to wall ([b9af634](https://github.com/hypeJunction/Elgg3-hypeWall/commit/b9af634))
+* **widgets:** display wall form in the widget by default ([c27b945](https://github.com/hypeJunction/Elgg3-hypeWall/commit/c27b945))
+
+
+
 <a name="5.2.0"></a>
 # [5.2.0](https://github.com/hypeJunction/hypeWall/compare/5.1.1...v5.2.0) (2017-07-31)
 
