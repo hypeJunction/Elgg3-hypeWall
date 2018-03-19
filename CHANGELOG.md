@@ -1,3 +1,8 @@
+<a name="6.0.1"></a>
+## [6.0.1](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.0...6.0.1) (2018-03-19)
+
+
+
 <a name="6.0.0"></a>
 # 6.0.0 (2018-03-19)
 
