@@ -123,7 +123,6 @@ module.exports = function (grunt) {
 
 		}
 	});
-
 	// Load all grunt plugins here
 	grunt.loadNpmTasks('grunt-version');
 	grunt.loadNpmTasks('grunt-contrib-copy');

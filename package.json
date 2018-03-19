@@ -4,8 +4,8 @@
 	"license": "GPL-2.0",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:hypeJunction/Elgg3-hypeWall.git",
-		"owner": "hypeJunction",
+		"url": "git@github.com:hypeJunctionPro/Elgg3-hypeWall.git",
+		"owner": "hypeJunctionPro",
 		"repo": "Elgg3-hypeWall"
 	},
 	"dependencies": {
