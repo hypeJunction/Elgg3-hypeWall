@@ -1,3 +1,13 @@
+<a name="6.0.2"></a>
+## [6.0.2](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.1...6.0.2) (2018-04-19)
+
+
+### Bug Fixes
+
+* **form:** correctly render file input ([2b7f6ad](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/2b7f6ad))
+
+
+
 <a name="6.0.1"></a>
 ## [6.0.1](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.0...6.0.1) (2018-03-19)
 
