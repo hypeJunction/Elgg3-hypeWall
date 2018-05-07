@@ -30,7 +30,7 @@ foreach ($attachments as $attachment) {
 elgg_push_context('wall-attachments');
 
 if (empty($non_images)) {
-	echo elgg_view_entity_list($images, [
+	$output = elgg_view_entity_list($images, [
 		'full_view' => false,
 		'pagination' => false,
 		'list_type' => 'gallery',
@@ -39,7 +39,7 @@ if (empty($non_images)) {
 		'rel' => "wall-popup-{$entity->guid}",
 	]);
 } else {
-	echo elgg_view_entity_list(array_merge($images, $non_images), [
+	$output = elgg_view_entity_list(array_merge($images, $non_images), [
 		'full_view' => false,
 		'pagination' => false,
 		'list_class' => 'wall-attachments-list',
@@ -47,6 +47,10 @@ if (empty($non_images)) {
 }
 
 elgg_pop_context();
+
+if (!$output) {
+    return;
+}
 ?>
 <script>
 	require(['output/wall/attachments'], function (lib) {

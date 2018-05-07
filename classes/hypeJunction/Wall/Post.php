@@ -70,6 +70,8 @@ class Post extends ElggObject {
 			'entity' => $this,
 		]);
 
+		$attachments = array_filter($attachments);
+
 		$output = (count($attachments)) ? implode('', $attachments) : false;
 		return elgg_trigger_plugin_hook('attachments:format', 'wall', ['entity' => $this], $output);
 	}
