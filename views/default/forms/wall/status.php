@@ -14,6 +14,7 @@ $fields[] = [
 	'placeholder' => elgg_echo('wall:status:placeholder'),
 	'rows' => 2,
 	'entity' => $entity,
+	'priority' => 100,
 ];
 
 if (elgg_get_plugin_setting('url', 'hypeWall')) {
@@ -27,6 +28,7 @@ if (elgg_get_plugin_setting('url', 'hypeWall')) {
 		'class' => 'wall-url',
 		'placeholder' => elgg_echo('wall:url:placeholder'),
 		'entity' => $entity,
+		'priority' => 500,
 	];
 
 	$tools[] = [
@@ -47,6 +49,7 @@ if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeA
 		'name' => 'upload_guids',
 		'class' => 'wall-photo',
 		'entity' => $entity,
+		'priority' => 500,
 	];
 
 	$tools[] = [
@@ -66,6 +69,7 @@ if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hyp
 		'name' => 'attachment_guids',
 		'class' => 'wall-content',
 		'entity' => $entity,
+		'priority' => 500,
 	];
 
 	$tools[] = [
@@ -96,6 +100,7 @@ if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
 		'value' => $value,
 		'placeholder' => elgg_echo('wall:tag:location:hint'),
 		'entity' => $entity,
+		'priority' => 500,
 	];
 
 	$tools[] = [
@@ -116,6 +121,7 @@ if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
 		'name' => 'friend_guids',
 		'data-hint-text' => elgg_echo('wall:tag:friends:hint'),
 		'entity' => $entity,
+		'priority' => 500,
 	];
 	$tools[] = [
 		'name' => 'tag-friends',
@@ -136,6 +142,7 @@ if (elgg_get_plugin_setting('tags', 'hypeWall')) {
 		'value' => $value,
 		'class' => 'wall-tags',
 		'entity' => $entity,
+		'priority' => 500,
 	];
 
 	$tools[] = [
@@ -173,6 +180,17 @@ $config = elgg_trigger_plugin_hook('form', 'wall', $vars, [
 
 $tools = elgg_extract('tools', $config, []);
 $fields = elgg_extract('fields', $config, []);
+
+usort($fields, function($a, $b) {
+	$pa = elgg_extract('priority', $a, 500);
+	$pb = elgg_extract('priority', $b, 500);
+
+	if ($pa == $pb) {
+		return 0;
+	}
+
+	return $pa < $pb ? -1 : 1;
+});
 
 foreach ($fields as $field) {
 	echo elgg_view_field($field);
