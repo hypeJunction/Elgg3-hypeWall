@@ -166,6 +166,14 @@ $fields[] = [
 	'value' => $entity ? $entity->container_guid : elgg_extract('container_guid', $vars, elgg_get_page_owner_guid()),
 ];
 
+$config = elgg_trigger_plugin_hook('form', 'wall', $vars, [
+	'tools' => $tools,
+	'fields' => $fields,
+]);
+
+$tools = elgg_extract('tools', $config, []);
+$fields = elgg_extract('fields', $config, []);
+
 foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
