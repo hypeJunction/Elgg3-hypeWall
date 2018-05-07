@@ -1,3 +1,13 @@
+<a name="6.1.0"></a>
+# [6.1.0](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.3...6.1.0) (2018-05-07)
+
+
+### Features
+
+* **form:** add a hook to configure fields and tools ([76b3a64](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/76b3a64))
+
+
+
 <a name="6.0.3"></a>
 ## [6.0.3](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.2...6.0.3) (2018-05-07)
 
