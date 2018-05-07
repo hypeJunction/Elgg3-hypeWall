@@ -1,3 +1,13 @@
+<a name="6.1.1"></a>
+## [6.1.1](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.1.0...6.1.1) (2018-05-07)
+
+
+### Bug Fixes
+
+* **form:** sort fields by priority ([0fae161](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/0fae161))
+
+
+
 <a name="6.1.0"></a>
 # [6.1.0](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.3...6.1.0) (2018-05-07)
 
