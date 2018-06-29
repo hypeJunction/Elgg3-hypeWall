@@ -55,8 +55,10 @@ return function() {
 
 		elgg_register_widget_type('wall', elgg_echo('wall'), elgg_echo('wall:widget:description'));
 
-		add_group_tool_option('wall', elgg_echo('wall:groups:enable'), false);
-		elgg_extend_view('groups/tool_latest', 'framework/wall/group_module');
+		elgg()->group_tools->register('wall', [
+			'label' => elgg_echo('wall:groups:enable'),
+			'default_on' => false,
+		]);
 
 		// Export
 		$subtype = Post::SUBTYPE;

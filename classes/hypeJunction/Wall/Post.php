@@ -93,11 +93,13 @@ class Post extends ElggObject {
 			$group_wall = true;
 		}
 
-		$summary[] = elgg_view('output/url', [
-			'text' => $subject->name,
-			'href' => $subject->getURL(),
-			'class' => 'elgg-river-subject',
-		]);
+		if ($subject) {
+			$summary[] = elgg_view('output/url', [
+				'text' => $subject->name,
+				'href' => $subject->getURL(),
+				'class' => 'elgg-river-subject',
+			]);
+		}
 
 		if ($this->address) {
 			$summary[] = elgg_echo('wall:new:address');
