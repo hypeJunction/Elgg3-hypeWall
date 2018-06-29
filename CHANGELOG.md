@@ -1,3 +1,21 @@
+<a name="6.2.0"></a>
+# [6.2.0](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.1...6.2.0) (2018-06-29)
+
+
+### Bug Fixes
+
+* **attachments:** fix attachments formatting ([59a9a34](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/59a9a34))
+* **form:** correctly render file input ([2b7f6ad](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/2b7f6ad))
+* **form:** sort fields by priority ([0fae161](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/0fae161))
+
+
+### Features
+
+* **core:** updates and fixes ([2beb43f](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/2beb43f))
+* **form:** add a hook to configure fields and tools ([76b3a64](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/76b3a64))
+
+
+
 <a name="6.1.1"></a>
 ## [6.1.1](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.1.0...6.1.1) (2018-05-07)
 
