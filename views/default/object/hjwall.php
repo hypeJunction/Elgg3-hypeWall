@@ -20,12 +20,10 @@ if ($message) {
 
 $attachments = $entity->formatAttachments();
 if ($attachments) {
-	$vars['attachments'] = elgg_format_element('div', [
+	$params['attachments'] = elgg_format_element('div', [
 		'class' => 'wall-attachments',
 			], $attachments);
 }
-
-$vars['subtitle'] = $entity->formatSummary();
 
 if (elgg_extract('full_view', $vars, false)) {
 	echo elgg_view('object/elements/full', $params);
