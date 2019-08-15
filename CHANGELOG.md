@@ -1,3 +1,13 @@
+<a name="6.2.4"></a>
+## [6.2.4](https://github.com/hypeJunction/Elgg3-hypeWall/compare/6.2.3...6.2.4) (2019-08-15)
+
+
+### Bug Fixes
+
+* **releases:** fix package location ([3cc97f4](https://github.com/hypeJunction/Elgg3-hypeWall/commit/3cc97f4))
+
+
+
 <a name="6.2.3"></a>
 ## [6.2.3](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.2.2...6.2.3) (2019-08-15)
 
