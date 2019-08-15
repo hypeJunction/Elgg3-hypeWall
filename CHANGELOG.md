@@ -1,3 +1,13 @@
+<a name="6.2.3"></a>
+## [6.2.3](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.2.2...6.2.3) (2019-08-15)
+
+
+### Bug Fixes
+
+* **views:** fix attachments view ([380b66e](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/380b66e))
+
+
+
 <a name="6.2.2"></a>
 ## [6.2.2](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.2.1...6.2.2) (2019-08-15)
 
