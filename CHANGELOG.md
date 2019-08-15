@@ -1,3 +1,13 @@
+<a name="6.2.1"></a>
+## [6.2.1](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.2.0...6.2.1) (2019-08-15)
+
+
+### Bug Fixes
+
+* **views:** use default object view ([3d10e01](https://github.com/hypeJunctionPro/Elgg3-hypeWall/commit/3d10e01))
+
+
+
 <a name="6.2.0"></a>
 # [6.2.0](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.1...6.2.0) (2018-06-29)
 
