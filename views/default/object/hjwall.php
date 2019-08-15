@@ -11,19 +11,23 @@ $params = $vars;
 
 $poster = $entity->getOwnerEntity();
 
+$content .= '';
+
 $message = $entity->formatMessage();
 if ($message) {
-	$params['content'] = elgg_format_element('div', [
+	$content .= elgg_format_element('div', [
 		'class' => 'wall-message',
 			], $message);
 }
 
 $attachments = $entity->formatAttachments();
 if ($attachments) {
-	$params['attachments'] = elgg_format_element('div', [
+	$content .= elgg_format_element('div', [
 		'class' => 'wall-attachments',
 			], $attachments);
 }
+
+$params['content'] = $content;
 
 if (elgg_extract('full_view', $vars, false)) {
 	echo elgg_view('object/elements/full', $params);

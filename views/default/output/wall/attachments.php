@@ -14,16 +14,18 @@ $entity = elgg_extract('entity', $vars);
 $attachments = hypeapps_get_attachments($entity, [
 	'batch' => true,
 	'limit' => 0,
-		]);
+]);
 
 $images = [];
 $non_images = [];
 
 foreach ($attachments as $attachment) {
-	if ($attachment instanceof ElggFile && $attachment->simpletype == 'image') {
-		$images[] = $attachment;
-	} else {
-		$non_images[] = $attachment;
+	if ($attachment instanceof ElggFile) {
+		if ($attachment->getSimpleType() == 'image') {
+			$images[] = $attachment;
+		} else {
+			$non_images[] = $attachment;
+		}
 	}
 }
 
@@ -49,8 +51,10 @@ if (empty($non_images)) {
 elgg_pop_context();
 
 if (!$output) {
-    return;
+	return;
 }
+
+echo $output;
 ?>
 <script>
 	require(['output/wall/attachments'], function (lib) {
