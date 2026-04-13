@@ -89,7 +89,7 @@ class Post extends ElggObject {
 			$owned = true;
 		}
 
-		if (elgg_instanceof($wall_owner, 'group')) {
+		if ($wall_owner instanceof \ElggGroup) {
 			$group_wall = true;
 		}
 

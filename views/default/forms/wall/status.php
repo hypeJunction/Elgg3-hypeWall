@@ -17,7 +17,7 @@ $fields[] = [
 	'priority' => 100,
 ];
 
-if (elgg_get_plugin_setting('url', 'hypeWall')) {
+if (elgg_get_plugin_setting('url', 'hypewall')) {
 	$value = $entity ? $entity->address : get_input('address');
 	$fields[] = [
 		'#type' => 'wall/url',
@@ -41,7 +41,7 @@ if (elgg_get_plugin_setting('url', 'hypeWall')) {
 	];
 }
 
-if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeAttachments')) {
+if (elgg_get_plugin_setting('photo', 'hypewall') && elgg_is_active_plugin('hypeAttachments')) {
 	$fields[] = [
 		'#type' => 'wall/file',
 		'#label' => elgg_echo('wall:photo'),
@@ -61,7 +61,7 @@ if (elgg_get_plugin_setting('photo', 'hypeWall') && elgg_is_active_plugin('hypeA
 	];
 }
 
-if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hypeAttachments')) {
+if (elgg_get_plugin_setting('content', 'hypewall') && elgg_is_active_plugin('hypeAttachments')) {
 	$fields[] = [
 		'#type' => 'wall/attachment',
 		'#label' => elgg_echo('wall:attachment'),
@@ -81,7 +81,7 @@ if (elgg_get_plugin_setting('content', 'hypeWall') && elgg_is_active_plugin('hyp
 	];
 }
 
-if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
+if (elgg_get_plugin_setting('geopositioning', 'hypewall')) {
 	$value = $entity ? $entity->location : get_input('location');
 	$find_me = elgg_view('output/url', [
 		'href' => '#',
@@ -113,7 +113,7 @@ if (elgg_get_plugin_setting('geopositioning', 'hypeWall')) {
 	];
 }
 
-if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
+if (elgg_get_plugin_setting('tag_friends', 'hypewall')) {
 	$fields[] = [
 		'#type' => 'wall/friend',
 		'#label' => elgg_echo('wall:tag_friends'),
@@ -132,7 +132,7 @@ if (elgg_get_plugin_setting('tag_friends', 'hypeWall')) {
 	];
 }
 
-if (elgg_get_plugin_setting('tags', 'hypeWall')) {
+if (elgg_get_plugin_setting('tags', 'hypewall')) {
 	$value = $entity ? $entity->tags : get_input('tags');
 	$fields[] = [
 		'#type' => 'tags',

@@ -10,11 +10,45 @@ const DB_CONFIG = {
 };
 
 export async function loginAs(page: Page, username: string, password: string = 'testpass123') {
-  await page.goto('/login');
-  await page.fill('input[name="username"]', username);
-  await page.fill('input[name="password"]', password);
-  await page.click('button[type="submit"], input[type="submit"]');
-  await page.waitForURL(/\/$|\/dashboard|\/index/, { timeout: 10000 }).catch(() => {});
+  await page.goto('/login', { waitUntil: 'domcontentloaded' });
+  // Elgg renders two login forms: one in topbar (hidden), one on the main
+  // resource view. Pick the visible one by filtering on visibility.
+  const forms = page.locator('form[action*="action/login"]');
+  const formCount = await forms.count();
+  console.log(`DEBUG login form count: ${formCount}`);
+  let form = null;
+  for (let i = 0; i < formCount; i++) {
+    const candidate = forms.nth(i);
+    if (await candidate.isVisible().catch(() => false)) {
+      form = candidate;
+      break;
+    }
+  }
+  if (!form) {
+    // Fallback: last form on page (usually the main-body one)
+    form = forms.last();
+  }
+  const formAction = await form.getAttribute('action');
+  console.log(`DEBUG login form action: ${formAction}`);
+  await form.locator('input[name="username"]').fill(username);
+  await form.locator('input[name="password"]').fill(password);
+  const [response] = await Promise.all([
+    page.waitForResponse(resp => resp.url().includes('action/login'), { timeout: 15000 }),
+    form.locator('button[type="submit"], input[type="submit"]').first().click(),
+  ]);
+  console.log(`DEBUG login response: ${response.status()} ${response.url()}`);
+  // Wait for redirect chain to complete before querying the page.
+  await page.waitForLoadState('load', { timeout: 15000 }).catch(() => {});
+  await page.waitForLoadState('domcontentloaded', { timeout: 5000 }).catch(() => {});
+  const errors = await page.locator('.elgg-message-error, .elgg-system-messages li').allTextContents().catch(() => []);
+  if (errors.length > 0) {
+    console.log(`DEBUG system messages: ${errors.join(' | ')}`);
+  }
+  const authMarker = await page.locator('a[href*="action/logout"]').count();
+  console.log(`DEBUG logout marker count: ${authMarker}`);
+  if (authMarker === 0) {
+    throw new Error(`loginAs: login did not succeed for ${username}`);
+  }
 }
 
 export async function queryDb(sql: string, params: any[] = []) {

@@ -1,6 +1,6 @@
 <?php
 
-$char_limit = elgg_get_plugin_setting('character_limit', 'hypeWall', 0);
+$char_limit = elgg_get_plugin_setting('character_limit', 'hypewall', 0);
 if ($char_limit > 0) {
 	$vars['data-limit'] = $char_limit;
 

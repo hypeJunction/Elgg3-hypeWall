@@ -21,35 +21,66 @@ test.describe('hypeWall', () => {
 
     await loginAs(page, username, password);
 
-    // Navigate to the user's own wall
-    await page.goto(`/wall/owner/${username}`);
+    // Check whether login actually took — Elgg 4.x puts the logged-in user's
+    // avatar / logout link in the topbar.
+    const loggedInMarker = await page.locator('a[href*="action/logout"], .elgg-menu-topbar').count();
+    console.log(`DEBUG logout/topbar markers: ${loggedInMarker}`);
 
-    // The form is at #wall-status-input or via the page/components/wall view
-    const textarea = page.locator('textarea[name="description"], #wall-form textarea').first();
-    if (!(await textarea.isVisible().catch(() => false))) {
-      test.skip(true, 'wall form not found on page (test fixture user may not exist)');
-      return;
+    await page.goto(`/wall/owner/${username}`);
+    console.log(`DEBUG url after wall nav: ${page.url()}`);
+
+    // How many textareas of any kind?
+    const allTextareas = await page.locator('textarea').count();
+    console.log(`DEBUG total textareas on page: ${allTextareas}`);
+    const descTextareas = await page.locator('textarea[name="status"]').count();
+    console.log(`DEBUG textareas[name=status]: ${descTextareas}`);
+
+    const textarea = page.locator('textarea[name="status"]').first();
+    const visible = await textarea.isVisible().catch(() => false);
+    if (!visible) {
+      // Dump a narrower slice to find the form state
+      const body = await page.locator('body').innerHTML().catch(() => '');
+      console.log(`DEBUG body slice [0..500]: ${body.substring(0, 500)}`);
+      console.log(`DEBUG body slice [-500..]: ${body.substring(Math.max(0, body.length - 500))}`);
+      throw new Error('wall textarea not visible');
     }
 
     const marker = `pw-test-${Date.now()}`;
     await textarea.fill(marker);
 
-    // Submit form
-    await page.locator('form#wall-form, form[action*="wall/status"]').first()
-      .locator('button[type="submit"], input[type="submit"]').first().click();
+    // Submit form and wait for the response
+    const submitForm = page.locator('form[action*="wall/status"]').first();
+    const [submitResp] = await Promise.all([
+      page.waitForResponse(r => r.url().includes('wall/status'), { timeout: 15000 }),
+      submitForm.locator('button[type="submit"], input[type="submit"]').first().click(),
+    ]);
+    console.log(`DEBUG wall/status response: ${submitResp.status()} ${submitResp.url()}`);
+    await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
+    console.log(`DEBUG post-submit url: ${page.url()}`);
 
-    // Wait for the page to update (either redirect or AJAX refresh)
-    await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-
-    // UI assertion: marker text should be visible somewhere on the page
-    await expect(page.getByText(marker).first()).toBeVisible({ timeout: 5000 });
+    // Check for system-message errors on the landing page
+    const postSubmitErrs = await page.locator('.elgg-system-messages li').allTextContents().catch(() => []);
+    console.log(`DEBUG post-submit messages: ${postSubmitErrs.join(' | ')}`);
 
     // DB assertion: an entity exists whose description metadata contains the marker
     const rows = await queryDb(
       `SELECT m.entity_guid FROM elgg_metadata m WHERE m.name = 'description' AND m.value = ? LIMIT 1`,
       [marker]
     );
+    console.log(`DEBUG DB rows for marker: ${rows.length}`);
     expect(rows.length).toBeGreaterThan(0);
+
+    // UI assertion: navigate to the created post's page and assert marker
+    // appears in the rendered HTML. Our session from loginAs carries through.
+    if (rows.length > 0) {
+      const guid = (rows[0] as any).entity_guid;
+      const resp = await page.goto(`/wall/post/${guid}`, { waitUntil: 'load' });
+      console.log(`DEBUG post view: status=${resp?.status()} url=${page.url()}`);
+      const content = await page.content();
+      console.log(`DEBUG content length: ${content.length}, contains marker: ${content.includes(marker)}`);
+      expect(content).toContain(marker);
+    }
+
   });
 
   test('wall view page renders for an existing post', async ({ page }) => {

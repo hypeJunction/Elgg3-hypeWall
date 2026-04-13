@@ -84,7 +84,7 @@ $post->description = $status;
 $post->access_id = $access_id;
 $post->origin = 'wall';
 $post->tags = $tags;
-$post->setLocation($location);
+$post->location = $location;
 $post->address = $address;
 
 if (!$post->save()) {

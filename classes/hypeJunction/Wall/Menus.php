@@ -150,13 +150,13 @@ class Menus {
 
 		$entity = elgg_extract('entity', $params);
 
-		if (elgg_instanceof($entity, 'user')) {
+		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => elgg_echo('wall'),
 						'href' => "wall/owner/{$entity->username}",
 			]);
-		} else if (elgg_instanceof($entity, 'group') && $entity->wall_enable == 'yes') {
+		} else if ($entity instanceof \ElggGroup && $entity->wall_enable == 'yes') {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => elgg_echo('wall:groups'),
@@ -184,7 +184,7 @@ class Menus {
 		}
 		$entity = elgg_extract('entity', $params);
 
-		if (elgg_instanceof($entity, 'user')) {
+		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
 						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
@@ -239,7 +239,7 @@ class Menus {
 		$items = $hook->getValue();
 
 		$entity = $hook->getEntityParam();
-		if (!$entity || !$entity->canWriteToContainer()) {
+		if (!$entity || !$entity->canWriteToContainer(0, "object", \hypeJunction\Wall\Post::SUBTYPE)) {
 			return;
 		}
 
