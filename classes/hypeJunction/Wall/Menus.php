@@ -17,7 +17,12 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function entityMenuSetup($hook, $type, $return, $params) {
+	public static function entityMenuSetup($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$entity = elgg_extract('entity', $params);
 
@@ -71,7 +76,12 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function riverMenuSetup($hook, $type, $return, $params) {
+	public static function riverMenuSetup($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$item = elgg_extract('item', $params);
 
@@ -131,7 +141,12 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function ownerBlockMenuSetup($hook, $type, $return, $params) {
+	public static function ownerBlockMenuSetup($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$entity = elgg_extract('entity', $params);
 
@@ -161,7 +176,12 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function userHoverMenuSetup($hook, $type, $return, $params) {
+	public static function userHoverMenuSetup($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 		$entity = elgg_extract('entity', $params);
 
 		if (elgg_instanceof($entity, 'user')) {
@@ -185,7 +205,12 @@ class Menus {
 	 * @param array          $params Hook params
 	 * @return ElggMenuItem[]
 	 */
-	public static function setupCardMenu($hook, $type, $return, $params) {
+	public static function setupCardMenu($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user) {

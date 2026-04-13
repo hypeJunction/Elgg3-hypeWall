@@ -239,12 +239,22 @@ class Post extends ElggObject {
 		]);
 	}
 
-	public static function getGraphAlias($hook, $type, $return, $params) {
+	public static function getGraphAlias($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 		$return['object'][Post::SUBTYPE] = ':wall';
 		return $return;
 	}
 
-	public static function getPostProperties($hook, $type, $return, $params) {
+	public static function getPostProperties($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$fields[] = 'location';
 		$fields[] = 'address';

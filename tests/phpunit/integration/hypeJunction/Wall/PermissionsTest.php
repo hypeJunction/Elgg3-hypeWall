@@ -14,7 +14,7 @@ class PermissionsTest extends IntegrationTestCase {
 	public function down() {}
 
 	public function getPluginID(): string {
-		return 'hypeWall';
+		return 'hypewall';
 	}
 
 	private function makePost($owner): Post {

@@ -1,0 +1,47 @@
+<?php
+
+namespace hypeJunction\Wall;
+
+use Elgg\DefaultPluginBootstrap;
+
+/**
+ * hypeWall plugin bootstrap.
+ *
+ * Most registrations live in elgg-plugin.php declarative config (entities,
+ * actions, routes, hooks, events, notifications, view_extensions, widgets,
+ * group_tools). This bootstrap is intentionally near-empty.
+ */
+class Bootstrap extends DefaultPluginBootstrap
+{
+    public function load(): void
+    {
+    }
+
+    public function boot(): void
+    {
+    }
+
+    public function init(): void
+    {
+    }
+
+    public function ready(): void
+    {
+    }
+
+    public function shutdown(): void
+    {
+    }
+
+    public function activate(): void
+    {
+    }
+
+    public function deactivate(): void
+    {
+    }
+
+    public function upgrade(): void
+    {
+    }
+}

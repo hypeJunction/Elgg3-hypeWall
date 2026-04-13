@@ -14,7 +14,7 @@ class ViewRenderingTest extends IntegrationTestCase {
 	public function down() {}
 
 	public function getPluginID(): string {
-		return 'hypeWall';
+		return 'hypewall';
 	}
 
 	public function testWallStylesheetRenders(): void {

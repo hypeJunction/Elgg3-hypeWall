@@ -19,7 +19,12 @@ class Permissions {
 	 * @param array   $params Additional params
 	 * @return boolean Filtered permission
 	 */
-	public static function containerPermissionsCheck($hook, $type, $return, $params) {
+	public static function containerPermissionsCheck($hook, $type = null, $return = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$return = $hook->getValue();
+			$params = $hook->getParams();
+		}
 		$container = elgg_extract('container', $params);
 		$user = elgg_extract('user', $params);
 		$subtype = elgg_extract('subtype', $params);
@@ -39,8 +44,8 @@ class Permissions {
 		if ($container->isFriend($user)) {
 			return true;
 		} else {
-			$third_party_wall_global = elgg_get_plugin_setting('third_party_wall', 'hypeWall');
-			$third_party_wall_user = elgg_get_plugin_user_setting('third_party_wall', $container->guid, 'hypeWall');
+			$third_party_wall_global = elgg_get_plugin_setting('third_party_wall', 'hypewall');
+			$third_party_wall_user = elgg_get_plugin_user_setting('third_party_wall', $container->guid, 'hypewall');
 
 			if ($third_party_wall_global && $third_party_wall_user) {
 				return true;

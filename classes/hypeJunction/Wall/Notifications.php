@@ -20,7 +20,12 @@ class Notifications {
 	 * @param array       $params       Hook params
 	 * @return Notification
 	 */
-	public static function formatMessage($hook, $type, $notification, $params) {
+	public static function formatMessage($hook, $type = null, $notification = null, $params = null) {
+		if ($hook instanceof \Elgg\Hook) {
+			$type = $hook->getType();
+			$notification = $hook->getValue();
+			$params = $hook->getParams();
+		}
 
 		$event = elgg_extract('event', $params);
 		$entity = $event->getObject();
@@ -77,7 +82,11 @@ class Notifications {
 	 * @param ElggEntity $entity      Published entity
 	 * @return boolean
 	 */
-	public static function sendCustomNotifications($event, $entity_type, $entity) {
+	public static function sendCustomNotifications($event, $entity_type = null, $entity = null) {
+		if ($event instanceof \Elgg\Event) {
+			$entity_type = $event->getType();
+			$entity = $event->getObject();
+		}
 
 		if (!$entity instanceof Post || $entity->origin !== 'wall') {
 			return true;

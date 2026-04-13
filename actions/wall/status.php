@@ -139,7 +139,7 @@ foreach ($friend_guids as $friend_guid) {
 		add_entity_relationship($upload->guid, 'access_grant', $friend->guid);
 	}
 
-	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypeWall', ACCESS_FRIEND);
+	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypewall', ACCESS_FRIEND);
 	if ($river_access_id && $new_tag) {
 		$ia = elgg_set_ignore_access(true);
 		$friend_wall_tag = elgg_get_entities([

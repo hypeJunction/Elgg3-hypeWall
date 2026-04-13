@@ -1,29 +1,44 @@
 {
 	"name": "hypejunction/hypewall",
-	"version": "6.2.0",
 	"type": "elgg-plugin",
-	"description": "Rich status updates",
+	"description": "Rich status updates for Elgg",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
 		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
 	],
-	"license": "proprietary",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
 			"email": "info@hypejunction.com"
 		}
 	],
-	"extra": {
-		"installer-name": "hypeWall"
-	},
 	"require": {
-		"composer/installers": "~1.0"
+		"php": ">=7.4",
+		"elgg/elgg": "^4.0",
+		"composer/installers": "^2.0"
 	},
 	"autoload": {
-		"psr-0": {
-			"": "classes/"
+		"psr-4": {
+			"hypeJunction\\Wall\\": "classes/hypeJunction/Wall/"
+		}
+	},
+	"extra": {
+		"elgg-plugin": {
+			"id": "hypewall"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		},
+		"audit": {
+			"abandoned": "ignore",
+			"ignore": {
+				"PKSA-sd3x-9jwt-jn4s": "ckeditor 4.x bundled by Elgg core",
+				"PKSA-4d16-gn5t-2wt7": "ckeditor 4.x bundled by Elgg core",
+				"PKSA-hw62-11cy-3pk5": "ckeditor 4.x bundled by Elgg core"
+			}
 		}
 	}
 }
-

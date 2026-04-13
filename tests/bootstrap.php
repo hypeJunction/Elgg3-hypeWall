@@ -1,10 +1,10 @@
 <?php
 /**
- * PHPUnit bootstrap for hypeWall.
+ * PHPUnit bootstrap for hypeWall — Elgg 4.x.
  *
- * Loads Elgg core + the test class autoloader, then ensures the plugin
- * is enabled, active, and lifecycle-init'd so its actions/hooks/widgets/
- * group_tools/view_extensions are registered for the test run.
+ * Loads Elgg + the test class autoloader, ensures the plugin is
+ * enabled + active, and triggers init() so registrations wired through
+ * elgg-plugin.php declarative config are actually attached.
  */
 
 $elggRoot = '/var/www/html';
@@ -24,7 +24,7 @@ spl_autoload_register(function ($class) use ($testClassesDir) {
 
 if (function_exists('_elgg_services')) {
     _elgg_services()->plugins->generateEntities();
-    $boot_plugin = elgg_get_plugin_from_id('hypeWall');
+    $boot_plugin = elgg_get_plugin_from_id('hypewall');
     if ($boot_plugin) {
         if (!$boot_plugin->isEnabled()) {
             $boot_plugin->enable();
@@ -32,17 +32,12 @@ if (function_exists('_elgg_services')) {
         if (!$boot_plugin->isActive()) {
             try { $boot_plugin->activate(); } catch (\Throwable $e) {}
         }
-        // 3.x plugins boot via start.php returning a closure, which Elgg invokes
-        // during the system 'init' event. Trigger it manually so tests see the
-        // post-init state (registered hooks/actions/views).
+        // Trigger plugin init lifecycle so actions/routes/hooks/events/widgets/
+        // group_tools/view_extensions declared in elgg-plugin.php are registered
+        // before any test runs. IntegrationTestCase doesn't auto-init plugins
+        // when reusing a shared app.
         try {
-            $closure = require $boot_plugin->getPath() . 'start.php';
-            if ($closure instanceof \Closure) {
-                $closure();
-            }
-        } catch (\Throwable $e) {}
-        try {
-            elgg_trigger_event('init', 'system');
+            $boot_plugin->init();
         } catch (\Throwable $e) {}
     }
 }
