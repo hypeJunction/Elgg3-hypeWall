@@ -7,7 +7,7 @@ if (!$user) {
 
 $entity = elgg_extract('entity', $vars);
 
-if ($entity instanceof \hypeJunction\Post\Post) {
+if (class_exists('\hypeJunction\Post\Post', false) && $entity instanceof \hypeJunction\Post\Post) {
 	$user = $entity->getOwnerEntity();
 } else {
 	$container = elgg_extract('container', $vars, $entity);
