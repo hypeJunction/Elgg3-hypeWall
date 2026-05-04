@@ -20,27 +20,41 @@ class BootstrapTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypewall';
 	}
 
-	public function testPluginLoadable(): void {
+	/**
+     * @return void
+     */
+    public function testPluginLoadable(): void {
 		$plugin = elgg_get_plugin_from_id('hypewall');
 		$this->assertNotNull($plugin);
 		$this->assertNotFalse($plugin->isActive());
 	}
 
 	// === Actions ===
-
-	public function testStatusActionRegistered(): void {
+    /**
+     * @return void
+     */
+    public function testStatusActionRegistered(): void {
 		$this->assertTrue(elgg_action_exists('wall/status'));
 	}
 
-	public function testRemoveTagActionRegistered(): void {
+	/**
+     * @return void
+     */
+    public function testRemoveTagActionRegistered(): void {
 		$this->assertTrue(elgg_action_exists('wall/remove_tag'));
 	}
 
-	public function testGeopositioningActionMissing(): void {
+	/**
+     * @return void
+     */
+    public function testGeopositioningActionMissing(): void {
 		// KNOWN GAP: start.php registers wall/geopositioning/update but the
 		// action file actions/wall/geopositioning/update.php was never present
 		// in the Elgg3-hypeWall fork. The legacy hypeWall (plugins-other/)
@@ -55,91 +69,147 @@ class BootstrapTest extends IntegrationTestCase {
 	}
 
 	// === Entity ===
-
-	public function testHjwallSubtypeConstant(): void {
+    /**
+     * @return void
+     */
+    public function testHjwallSubtypeConstant(): void {
 		$this->assertSame('hjwall', Post::SUBTYPE);
 	}
 
-	public function testHjwallEntityClassMapped(): void {
+	/**
+     * @return void
+     */
+    public function testHjwallEntityClassMapped(): void {
 		$class = elgg_get_entity_class('object', Post::SUBTYPE);
 		$this->assertSame(Post::class, $class);
 	}
 
 	// === Classes autoload ===
-
-	public function testPostClassAutoloads(): void {
+    /**
+     * @return void
+     */
+    public function testPostClassAutoloads(): void {
 		$this->assertTrue(class_exists(Post::class));
 	}
 
-	public function testMenusClassAutoloads(): void {
+	/**
+     * @return void
+     */
+    public function testMenusClassAutoloads(): void {
 		$this->assertTrue(class_exists(Menus::class));
 	}
 
-	public function testNotificationsClassAutoloads(): void {
+	/**
+     * @return void
+     */
+    public function testNotificationsClassAutoloads(): void {
 		$this->assertTrue(class_exists(Notifications::class));
 	}
 
-	public function testPermissionsClassAutoloads(): void {
+	/**
+     * @return void
+     */
+    public function testPermissionsClassAutoloads(): void {
 		$this->assertTrue(class_exists(Permissions::class));
 	}
 
 	// === Class methods (hook handlers must remain callable across migration) ===
-
-	public function testPermissionsContainerCheckCallable(): void {
+    /**
+     * @return void
+     */
+    public function testPermissionsContainerCheckCallable(): void {
 		$this->assertTrue(method_exists(Permissions::class, 'containerPermissionsCheck'));
 	}
 
-	public function testNotificationsSendCustomCallable(): void {
+	/**
+     * @return void
+     */
+    public function testNotificationsSendCustomCallable(): void {
 		$this->assertTrue(method_exists(Notifications::class, 'sendCustomNotifications'));
 	}
 
-	public function testNotificationsFormatMessageCallable(): void {
+	/**
+     * @return void
+     */
+    public function testNotificationsFormatMessageCallable(): void {
 		$this->assertTrue(method_exists(Notifications::class, 'formatMessage'));
 	}
 
-	public function testMenusEntityMenuSetupCallable(): void {
+	/**
+     * @return void
+     */
+    public function testMenusEntityMenuSetupCallable(): void {
 		$this->assertTrue(method_exists(Menus::class, 'entityMenuSetup'));
 	}
 
-	public function testMenusOwnerBlockMenuSetupCallable(): void {
+	/**
+     * @return void
+     */
+    public function testMenusOwnerBlockMenuSetupCallable(): void {
 		$this->assertTrue(method_exists(Menus::class, 'ownerBlockMenuSetup'));
 	}
 
-	public function testMenusRiverMenuSetupCallable(): void {
+	/**
+     * @return void
+     */
+    public function testMenusRiverMenuSetupCallable(): void {
 		$this->assertTrue(method_exists(Menus::class, 'riverMenuSetup'));
 	}
 
-	public function testMenusUserHoverMenuSetupCallable(): void {
+	/**
+     * @return void
+     */
+    public function testMenusUserHoverMenuSetupCallable(): void {
 		$this->assertTrue(method_exists(Menus::class, 'userHoverMenuSetup'));
 	}
 
-	public function testPostGetGraphAliasCallable(): void {
+	/**
+     * @return void
+     */
+    public function testPostGetGraphAliasCallable(): void {
 		$this->assertTrue(method_exists(Post::class, 'getGraphAlias'));
 	}
 
-	public function testPostGetPostPropertiesCallable(): void {
+	/**
+     * @return void
+     */
+    public function testPostGetPostPropertiesCallable(): void {
 		$this->assertTrue(method_exists(Post::class, 'getPostProperties'));
 	}
 
 	// === Views ===
-
-	public function testWallFormViewExists(): void {
+    /**
+     * @return void
+     */
+    public function testWallFormViewExists(): void {
 		$this->assertTrue(elgg_view_exists('forms/wall/status'));
 	}
 
-	public function testWallMessageViewExists(): void {
+	/**
+     * @return void
+     */
+    public function testWallMessageViewExists(): void {
 		$this->assertTrue(elgg_view_exists('object/hjwall/elements/message'));
 	}
 
-	public function testRiverItemViewExists(): void {
+	/**
+     * @return void
+     */
+    public function testRiverItemViewExists(): void {
 		$this->assertTrue(elgg_view_exists('river/object/hjwall/create'));
 	}
 
-	public function testWallStylesheetViewExists(): void {
+	/**
+     * @return void
+     */
+    public function testWallStylesheetViewExists(): void {
 		$this->assertTrue(elgg_view_exists('framework/wall/stylesheet.css'));
 	}
 
-	public function testWallPageComponentViewExists(): void {
+	/**
+     * @return void
+     */
+    public function testWallPageComponentViewExists(): void {
 		$this->assertTrue(elgg_view_exists('page/components/wall'));
 	}
 }

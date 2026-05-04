@@ -16,7 +16,7 @@ elgg_push_collection_breadcrumbs('object', 'hjwall', $group);
 $content = elgg_view('lists/wall', [
 	'entity' => $group,
 	'post_guids' => $post_guids,
-		]);
+]);
 
 if ($request->isXhr()) {
 	echo $content;

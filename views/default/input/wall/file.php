@@ -11,6 +11,6 @@ if (elgg_view_exists('input/dropzone')) {
 	$vars['name'] = "{$name}[]";
 	echo elgg_view('input/file', [
 		'multiple' => true,
-		'accept' => "image/*",
+		'accept' => 'image/*',
 	] + $vars);
 }

@@ -1,3 +1,18 @@
+<a name="7.0.0"></a>
+# [7.0.0] (2026-05-04)
+
+### Migration: Elgg 4.x → 5.x
+
+* **api:** merged `hooks` key into `events` in `elgg-plugin.php` (Elgg 5.x unified events)
+* **api:** all handler signatures updated from 4-arg to single `\Elgg\Event $event`
+* **api:** `elgg_trigger_plugin_hook()` replaced with `elgg_trigger_event_results()` at all call sites
+* **api:** `ElggUser::isFriend()` removed — replaced with `elgg_get_relationships()` count check
+* **api:** `check_entity_relationship()` removed — replaced with `elgg_get_relationships()` count check
+* **api:** `Post::getDisplayName()` now declares `: string` return type (required by Elgg 5.x parent)
+* **deps:** `composer.json` bumped to `php >=8.1`, `elgg/elgg ^5.0`
+* **docker:** stack updated to PHP 8.1, MySQL 8.0, Elgg 5.1
+
+
 <a name="6.2.0"></a>
 # [6.2.0](https://github.com/hypeJunctionPro/Elgg3-hypeWall/compare/6.0.1...6.2.0) (2018-06-29)
 

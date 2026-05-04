@@ -11,37 +11,53 @@ use Elgg\DefaultPluginBootstrap;
  * actions, routes, hooks, events, notifications, view_extensions, widgets,
  * group_tools). This bootstrap is intentionally near-empty.
  */
-class Bootstrap extends DefaultPluginBootstrap
-{
-    public function load(): void
-    {
-    }
+class Bootstrap extends DefaultPluginBootstrap {
 
-    public function boot(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function load(): void {
+	}
 
-    public function init(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function boot(): void {
+	}
 
-    public function ready(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function init(): void {
+	}
 
-    public function shutdown(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function ready(): void {
+	}
 
-    public function activate(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function shutdown(): void {
+	}
 
-    public function deactivate(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function activate(): void {
+	}
 
-    public function upgrade(): void
-    {
-    }
+	/**
+	 * @return void
+	 */
+	public function deactivate(): void {
+	}
+
+	/**
+	 * @return void
+	 */
+	public function upgrade(): void {
+	}
 }

@@ -47,6 +47,7 @@ $tags = array_map(function($tag) {
 	if (strpos($tag, '#') === 0) {
 		$tag = substr($tag, 1);
 	}
+
 	return $tag;
 }, $tags);
 
@@ -60,6 +61,7 @@ if ($guid) {
 	if (!$post) {
 		return elgg_error_response(elgg_echo('wall:error:not_found'));
 	}
+
 	$container = $post->getContainerEntity();
 } else {
 	$action = 'create';
@@ -104,6 +106,7 @@ foreach ($upload_guids as $upload_guid) {
 	if (!$upload instanceof ElggFile || !$upload->canEdit()) {
 		continue;
 	}
+
 	$upload->origin = 'wall';
 	$upload->container_guid = $post->guid;
 	$upload->access_id = $post->access_id;
@@ -119,6 +122,7 @@ if (is_callable('hypeapps_attach')) {
 		if (!$attachment) {
 			continue;
 		}
+
 		hypeapps_attach($post, $attachment);
 	}
 }
@@ -165,6 +169,7 @@ foreach ($friend_guids as $friend_guid) {
 				'object_guid' => $friend_wall_tag->guid,
 			]);
 		}
+
 		elgg_set_ignore_access($ia);
 	}
 }
@@ -173,12 +178,15 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 	if (!$address) {
 		return false;
 	}
+
 	if (!get_input('make_bookmark') || !elgg_is_active_plugin('bookmarks')) {
 		return false;
 	}
+
 	if (!is_callable('hypeapps_scrape')) {
 		return false;
 	}
+
 	if (!$container->canWriteToContainer($poster->guid, 'object', 'bookmarks')) {
 		return false;
 	}
@@ -190,7 +198,7 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 	}
 
 	$bookmark = new ElggObject;
-	$bookmark->subtype = "bookmarks";
+	$bookmark->subtype = 'bookmarks';
 	$bookmark->owner_guid = $poster->guid;
 	$bookmark->container_guid = $container->guid;
 	$bookmark->address = $address;
@@ -225,7 +233,7 @@ $params = [
 	'url' => $post->getURL(),
 	'origin' => 'wall',
 ];
-elgg_trigger_plugin_hook('status', 'user', $params);
+elgg_trigger_event_results('status', 'user', $params);
 
 $data = '';
 if (elgg_is_xhr()) {

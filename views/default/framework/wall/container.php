@@ -16,9 +16,11 @@ if (class_exists('\hypeJunction\Post\Post', false) && $entity instanceof \hypeJu
 	if (!$container) {
 		$container = elgg_get_page_owner_entity();
 	}
+
 	if (!$container) {
 		$container = $user;
 	}
+
 	if (!$container->canWriteToContainer(0, 'object', \hypeJunction\Wall\Post::SUBTYPE)) {
 		return;
 	}
@@ -61,7 +63,7 @@ if ($quick_links) {
 	];
 }
 
-$tabs = elgg_trigger_plugin_hook('tabs', 'wall', $vars, [
+$tabs = elgg_trigger_event_results('tabs', 'wall', $vars, [
 	'tabs' => $tabs,
 	'class' => 'wall-forms',
 ]);

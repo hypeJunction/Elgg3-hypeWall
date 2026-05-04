@@ -16,14 +16,14 @@ $message = $entity->formatMessage();
 if ($message) {
 	$content .= elgg_format_element('div', [
 		'class' => 'wall-message',
-			], $message);
+	], $message);
 }
 
 $attachments = $entity->formatAttachments();
 if ($attachments) {
 	$content .= elgg_format_element('div', [
 		'class' => 'wall-attachments',
-			], $attachments);
+	], $attachments);
 }
 
 $menu = '';
@@ -40,7 +40,7 @@ $subtitle = $entity->formatSummary();
 $user_icon = elgg_view_entity_icon($poster, 'medium', [
 	'use_hover' => false,
 	'img_class' => 'wall-poster-avatar'
-		]);
+]);
 
 if (elgg_extract('full_view', $vars, false)) {
 	$summary = elgg_view('object/elements/summary', [

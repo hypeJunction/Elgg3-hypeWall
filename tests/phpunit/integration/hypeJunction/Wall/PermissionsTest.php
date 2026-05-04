@@ -13,11 +13,18 @@ class PermissionsTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypewall';
 	}
 
-	private function makePost($owner): Post {
+	/**
+     * @param mixed $owner
+     * @return Post
+     */
+    private function makePost($owner): Post {
 		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($owner) {
 			$post = new Post();
 			$post->owner_guid = $owner->guid;
@@ -29,14 +36,20 @@ class PermissionsTest extends IntegrationTestCase {
 		});
 	}
 
-	public function testOwnerCanEditOwnPost(): void {
+	/**
+     * @return void
+     */
+    public function testOwnerCanEditOwnPost(): void {
 		$owner = $this->createUser();
 		$post = $this->makePost($owner);
 		$this->assertTrue($post->canEdit($owner->guid));
 		$post->delete();
 	}
 
-	public function testNonOwnerCannotEditPost(): void {
+	/**
+     * @return void
+     */
+    public function testNonOwnerCannotEditPost(): void {
 		$owner = $this->createUser();
 		$other = $this->createUser();
 		$post = $this->makePost($owner);
@@ -44,7 +57,10 @@ class PermissionsTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testAdminCanEditAnyPost(): void {
+	/**
+     * @return void
+     */
+    public function testAdminCanEditAnyPost(): void {
 		$owner = $this->createUser();
 		$admin = $this->createUser();
 		$admin->makeAdmin();
@@ -53,7 +69,10 @@ class PermissionsTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testContainerPermissionsCheckIsStatic(): void {
+	/**
+     * @return void
+     */
+    public function testContainerPermissionsCheckIsStatic(): void {
 		// containerPermissionsCheck is registered as a hook handler — must
 		// remain a public static method that accepts the hook signature.
 		$reflection = new \ReflectionMethod(Permissions::class, 'containerPermissionsCheck');

@@ -1,6 +1,6 @@
 <?php
 
-if (sizeof($vars['menu']['default']) <= 1) {
+if (count($vars['menu']['default']) <= 1) {
 	return;
 }
 

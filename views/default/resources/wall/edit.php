@@ -19,7 +19,7 @@ $form = elgg_view('framework/wall/container', [
 	'entity' => $entity,
 ]);
 
-$content =  elgg_format_element('div', [
+$content = elgg_format_element('div', [
 	'class' => [
 		'wall-component',
 		'wall-to-wall',

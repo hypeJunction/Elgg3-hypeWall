@@ -2,28 +2,20 @@
 
 namespace hypeJunction\Wall;
 
-use Elgg\Hook;
+use Elgg\Event;
 use ElggMenuItem;
 use ElggRiverItem;
 
+/** @access private */
 class Menus {
 
 	/**
-	 * Add actions to the wall post menu
-	 *
-	 * @param string $hook   Equals 'register'
-	 * @param string $type   Equals 'menu:entity'
-	 * @param array  $return Current menu
-	 * @param array  $params Additional params
-	 * @return array Updated menu
+	 * @param Event $event Plugin event object
+	 * @return ?array
 	 */
-	public static function entityMenuSetup($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
-
+	public static function entityMenuSetup(Event $event): ?array {
+		$return = $event->getValue();
+		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
 
 		if (!$entity instanceof Post) {
@@ -31,14 +23,14 @@ class Menus {
 		}
 
 		$logged_in = elgg_get_logged_in_user_entity();
-		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
+		if (elgg_get_relationships(['guid' => $logged_in->guid, 'relationship' => 'tagged_in', 'guid_two' => $entity->guid, 'count' => true])) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'remove_tag',
-						'text' => elgg_echo('wall:remove_tag'),
-						'title' => elgg_echo('wall:remove_tag'),
-						'priority' => 800,
-						'href' => "action/wall/remove_tag?guid=$entity->guid",
-						'is_action' => true,
+				'name' => 'remove_tag',
+				'text' => elgg_echo('wall:remove_tag'),
+				'title' => elgg_echo('wall:remove_tag'),
+				'priority' => 800,
+				'href' => "action/wall/remove_tag?guid=$entity->guid",
+				'is_action' => true,
 			]);
 		}
 
@@ -54,13 +46,13 @@ class Menus {
 
 		if ($entity->canDelete()) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'delete',
-						'text' => elgg_view_icon('delete'),
-						'title' => elgg_echo('wall:delete'),
-						'priority' => 900,
-						'href' => "action/entity/delete?guid=$entity->guid",
-						'is_action' => true,
-						'confirm' => true,
+				'name' => 'delete',
+				'text' => elgg_view_icon('delete'),
+				'title' => elgg_echo('wall:delete'),
+				'priority' => 900,
+				'href' => "action/entity/delete?guid=$entity->guid",
+				'is_action' => true,
+				'confirm' => true,
 			]);
 		}
 
@@ -68,21 +60,12 @@ class Menus {
 	}
 
 	/**
-	 * Allow users to delete and remove tags from the river
-	 *
-	 * @param string $hook   Equals 'register'
-	 * @param string $type   Equals 'menu:river'
-	 * @param array  $return Current menu
-	 * @param array  $params Additional params
-	 * @return array Updated menu
+	 * @param Event $event Plugin event object
+	 * @return ?array
 	 */
-	public static function riverMenuSetup($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
-
+	public static function riverMenuSetup(Event $event): ?array {
+		$return = $event->getValue();
+		$params = $event->getParams();
 		$item = elgg_extract('item', $params);
 
 		if (!($item instanceof ElggRiverItem)) {
@@ -92,18 +75,18 @@ class Menus {
 		$object = $item->getObjectEntity();
 
 		if (!$object instanceof Post) {
-			return;
+			return null;
 		}
 
 		$logged_in = elgg_get_logged_in_user_entity();
-		if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
+		if (elgg_get_relationships(['guid' => $logged_in->guid, 'relationship' => 'tagged_in', 'guid_two' => $object->guid, 'count' => true])) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'remove_tag',
-						'text' => elgg_echo('wall:remove_tag'),
-						'title' => elgg_echo('wall:remove_tag'),
-						'priority' => 800,
-						'href' => "action/wall/remove_tag?guid=$object->guid",
-						'is_action' => true,
+				'name' => 'remove_tag',
+				'text' => elgg_echo('wall:remove_tag'),
+				'title' => elgg_echo('wall:remove_tag'),
+				'priority' => 800,
+				'href' => "action/wall/remove_tag?guid=$object->guid",
+				'is_action' => true,
 			]);
 		}
 
@@ -119,13 +102,13 @@ class Menus {
 
 		if ($object->canDelete()) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'delete',
-						'text' => elgg_view_icon('delete'),
-						'title' => elgg_echo('wall:delete'),
-						'priority' => 900,
-						'href' => "action/entity/delete?guid=$object->guid",
-						'is_action' => true,
-						'confirm' => true,
+				'name' => 'delete',
+				'text' => elgg_view_icon('delete'),
+				'title' => elgg_echo('wall:delete'),
+				'priority' => 900,
+				'href' => "action/entity/delete?guid=$object->guid",
+				'is_action' => true,
+				'confirm' => true,
 			]);
 		}
 
@@ -133,34 +116,25 @@ class Menus {
 	}
 
 	/**
-	 * Setup owner block menu
-	 *
-	 * @param string $hook   Equals 'register'
-	 * @param string $type   Equals 'menu:owner_block'
-	 * @param array  $return Current menu
-	 * @param array  $params Additional params
-	 * @return array Updated menu
+	 * @param Event $event Plugin event object
+	 * @return ?array
 	 */
-	public static function ownerBlockMenuSetup($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
-
+	public static function ownerBlockMenuSetup(Event $event): ?array {
+		$return = $event->getValue();
+		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'wall',
-						'text' => elgg_echo('wall'),
-						'href' => "wall/owner/{$entity->username}",
+				'name' => 'wall',
+				'text' => elgg_echo('wall'),
+				'href' => "wall/owner/{$entity->username}",
 			]);
 		} else if ($entity instanceof \ElggGroup && $entity->wall_enable == 'yes') {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'wall',
-						'text' => elgg_echo('wall:groups'),
-						'href' => "wall/group/{$entity->guid}",
+				'name' => 'wall',
+				'text' => elgg_echo('wall:groups'),
+				'href' => "wall/group/{$entity->guid}",
 			]);
 		}
 
@@ -168,58 +142,43 @@ class Menus {
 	}
 
 	/**
-	 * Add a shortcut link to the user hover menu
-	 *
-	 * @param string $hook   Equals 'register'
-	 * @param string $type   Equals 'menu:user_hover'
-	 * @param array  $return Current menu
-	 * @param array  $params Additional params
-	 * @return array Updated menu
+	 * @param Event $event Plugin event object
+	 * @return ?array
 	 */
-	public static function userHoverMenuSetup($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
+	public static function userHoverMenuSetup(Event $event): ?array {
+		$return = $event->getValue();
+		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'wall',
-						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
-						'href' => "wall/owner/{$entity->username}",
-						'section' => 'action',
-						'icon' => 'comments-o',
+				'name' => 'wall',
+				'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
+				'href' => "wall/owner/{$entity->username}",
+				'section' => 'action',
+				'icon' => 'comments-o',
 			]);
 		}
+
 		return $return;
 	}
 
 	/**
-	 * Setup menu
-	 *
-	 * @param string         $hook   "register"
-	 * @param string         $type   "menu:scraper:card"
-	 * @param ElggMenuItem[] $return Menu
-	 * @param array          $params Hook params
-	 * @return ElggMenuItem[]
+	 * @param Event $event Plugin event object
+	 * @return ?array
 	 */
-	public static function setupCardMenu($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
+	public static function setupCardMenu(Event $event): ?array {
+		$return = $event->getValue();
+		$params = $event->getParams();
 
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user) {
-			return;
+			return null;
 		}
 
 		$href = elgg_extract('href', $params);
 		if (!$href) {
-			return;
+			return null;
 		}
 
 		$return[] = ElggMenuItem::factory([
@@ -234,19 +193,22 @@ class Menus {
 		return $return;
 	}
 
-	public static function setupQuickLinks(Hook $hook) {
+	/**
+	 * @param Event $event Plugin event object
+	 * @return ?array
+	 */
+	public static function setupQuickLinks(Event $event): ?array {
+		$items = $event->getValue();
 
-		$items = $hook->getValue();
-
-		$entity = $hook->getEntityParam();
-		if (!$entity || !$entity->canWriteToContainer(0, "object", \hypeJunction\Wall\Post::SUBTYPE)) {
-			return;
+		$entity = $event->getEntityParam();
+		if (!$entity || !$entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) {
+			return null;
 		}
 
 		$types = get_registered_entity_types('object');
 
 		if (empty($types)) {
-			return;
+			return null;
 		}
 
 		foreach ($types as $type) {
@@ -255,6 +217,7 @@ class Menus {
 					'guid' => $entity->guid,
 				]);
 			} catch (\Exception $ex) {
+				$url = null;
 			}
 
 			if (!$url) {
@@ -269,6 +232,5 @@ class Menus {
 		}
 
 		return $items;
-
 	}
 }

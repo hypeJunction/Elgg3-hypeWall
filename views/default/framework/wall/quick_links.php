@@ -4,6 +4,7 @@ $entity = elgg_extract('entity', $vars);
 if (!$entity) {
 	$entity = elgg_get_page_owner_entity();
 }
+
 if (!$entity) {
 	return;
 }

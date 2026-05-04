@@ -14,7 +14,7 @@ $entity = elgg_extract('entity', $vars);
 $attachments = hypeapps_get_attachments($entity, [
 	'batch' => true,
 	'limit' => 0,
-		]);
+]);
 
 $images = [];
 $non_images = [];
@@ -49,7 +49,7 @@ if (empty($non_images)) {
 elgg_pop_context();
 
 if (!$output) {
-    return;
+	return;
 }
 ?>
 <script>

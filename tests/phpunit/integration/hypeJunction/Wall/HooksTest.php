@@ -15,11 +15,17 @@ class HooksTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypewall';
 	}
 
-	public function testLikableHookReturnsTrueForHjwall(): void {
+	/**
+     * @return void
+     */
+    public function testLikableHookReturnsTrueForHjwall(): void {
 		// likes:is_likable hook for object:hjwall is registered to
 		// Elgg\Values::getTrue, so triggering it must return true.
 		$result = elgg_trigger_plugin_hook('likes:is_likable', 'object:hjwall', [], false);
@@ -29,13 +35,19 @@ class HooksTest extends IntegrationTestCase {
 		);
 	}
 
-	public function testLikableHookForOtherSubtypeUntouched(): void {
+	/**
+     * @return void
+     */
+    public function testLikableHookForOtherSubtypeUntouched(): void {
 		// Sanity check that the hook is NOT globally hijacked.
 		$result = elgg_trigger_plugin_hook('likes:is_likable', 'object:nosuchtype', [], false);
 		$this->assertFalse((bool) $result);
 	}
 
-	public function testContainerPermissionsCheckHookRegistered(): void {
+	/**
+     * @return void
+     */
+    public function testContainerPermissionsCheckHookRegistered(): void {
 		// Permissions::containerPermissionsCheck is registered to
 		// container_permissions_check/object. Triggering with a synthetic
 		// container_guid + user_guid pair should return a value (true or

@@ -3,35 +3,23 @@
 namespace hypeJunction\Wall;
 
 use Elgg\Notifications\Notification;
-use ElggEntity;
 use ElggUser;
 
-/**
- * @access private
- */
+/** @access private */
 class Notifications {
 
 	/**
-	 * Prepare a notification for when the wall post or wire is created
-	 *
-	 * @param string      $hook         "prepare"
-	 * @param string      $type         "notification:publish:object:hjwall"
-	 * @param Notfication $notification Notification object
-	 * @param array       $params       Hook params
-	 * @return Notification
+	 * @param \Elgg\Event $event Plugin event object
+	 * @return ?Notification
 	 */
-	public static function formatMessage($hook, $type = null, $notification = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$notification = $hook->getValue();
-			$params = $hook->getParams();
-		}
+	public static function formatMessage(\Elgg\Event $event): ?Notification {
+		$notification = $event->getValue();
+		$params = $event->getParams();
 
-		$event = elgg_extract('event', $params);
-		$entity = $event->getObject();
+		$notification_event = elgg_extract('event', $params);
+		$entity = $notification_event->getObject();
 		$recipient = elgg_extract('recipient', $params);
 		$language = elgg_extract('language', $params);
-		$method = elgg_extract('method', $params);
 
 		if (!$entity instanceof Post || $entity->origin != 'wall') {
 			return $notification;
@@ -74,22 +62,14 @@ class Notifications {
 	}
 
 	/**
-	 * Listen to the 'publish','object' event and send out notifications
-	 * to interested users, as well as anyone tagged
-	 *
-	 * @param string     $event       Equals 'publish'
-	 * @param string     $entity_type Equals 'object'
-	 * @param ElggEntity $entity      Published entity
-	 * @return boolean
+	 * @param \Elgg\Event $event Plugin event object
+	 * @return void
 	 */
-	public static function sendCustomNotifications($event, $entity_type = null, $entity = null) {
-		if ($event instanceof \Elgg\Event) {
-			$entity_type = $event->getType();
-			$entity = $event->getObject();
-		}
+	public static function sendCustomNotifications(\Elgg\Event $event): void {
+		$entity = $event->getObject();
 
 		if (!$entity instanceof Post || $entity->origin !== 'wall') {
-			return true;
+			return;
 		}
 
 		$poster = $entity->getOwnerEntity();
@@ -158,7 +138,7 @@ class Notifications {
 			]);
 
 			$summary = elgg_echo('wall:tagged:notification:subject', [$poster_url, $post_url], $language);
-			$subject = strip_tags($subject);
+			$subject = strip_tags($summary);
 			$body = elgg_echo('wall:tagged:notification:message', [
 				$poster_url,
 				$message,
@@ -171,7 +151,5 @@ class Notifications {
 				'action' => 'tagged',
 			]);
 		}
-
-		return true;
 	}
 }

@@ -8,6 +8,7 @@ use hypeJunction\BatchResult;
 use hypeJunction\Data\Property;
 use hypeJunction\Data\PropertyInterface;
 
+/** @access private */
 class Post extends ElggObject {
 
 	const TYPE = 'object';
@@ -24,7 +25,7 @@ class Post extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		$owner = $this->getOwnerEntity();
 		$container = $this->getContainerEntity();
 		if ($owner->guid == $container->guid) {
@@ -32,6 +33,7 @@ class Post extends ElggObject {
 		} else if ($owner) {
 			return elgg_echo('wall:post:wall_to_wall', [elgg_echo('wall:byline', [$owner->getDisplayName()])]);
 		}
+
 		return parent::getDisplayName();
 	}
 
@@ -47,7 +49,7 @@ class Post extends ElggObject {
 			'include_address' => $include_address,
 		]);
 
-		return elgg_trigger_plugin_hook('message:format', 'wall', ['entity' => $this], $output);
+		return elgg_trigger_event_results('message:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -73,7 +75,7 @@ class Post extends ElggObject {
 		$attachments = array_filter($attachments);
 
 		$output = (count($attachments)) ? implode('', $attachments) : false;
-		return elgg_trigger_plugin_hook('attachments:format', 'wall', ['entity' => $this], $output);
+		return elgg_trigger_event_results('attachments:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -142,7 +144,7 @@ class Post extends ElggObject {
 		}
 
 		$output = implode(' ', $summary);
-		return elgg_trigger_plugin_hook('summary:format', 'wall', ['entity' => $this], $output);
+		return elgg_trigger_event_results('summary:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -221,6 +223,11 @@ class Post extends ElggObject {
 		return $tagged_friends;
 	}
 
+	/**
+	 * @param PropertyInterface $prop Property definition
+	 * @param Post              $post Wall post entity
+	 * @return mixed
+	 */
 	public static function getTaggedUsersProp(PropertyInterface $prop, Post $post) {
 		return new BatchResult('elgg_get_entities', [
 			'types' => 'user',
@@ -231,6 +238,11 @@ class Post extends ElggObject {
 		]);
 	}
 
+	/**
+	 * @param PropertyInterface $prop Property definition
+	 * @param Post              $post Wall post entity
+	 * @return mixed
+	 */
 	public static function getAttachmentsProp(PropertyInterface $prop, Post $post) {
 		return new BatchResult('elgg_get_entities', [
 			'relationship' => 'attached',
@@ -239,22 +251,22 @@ class Post extends ElggObject {
 		]);
 	}
 
-	public static function getGraphAlias($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
-		$return['object'][Post::SUBTYPE] = ':wall';
+	/**
+	 * @param \Elgg\Event $event Plugin event object
+	 * @return ?array
+	 */
+	public static function getGraphAlias(\Elgg\Event $event): ?array {
+		$return = $event->getValue();
+		$return['object'][self::SUBTYPE] = ':wall';
 		return $return;
 	}
 
-	public static function getPostProperties($hook, $type = null, $return = null, $params = null) {
-		if ($hook instanceof \Elgg\Hook) {
-			$type = $hook->getType();
-			$return = $hook->getValue();
-			$params = $hook->getParams();
-		}
+	/**
+	 * @param \Elgg\Event $event Plugin event object
+	 * @return ?array
+	 */
+	public static function getPostProperties(\Elgg\Event $event): ?array {
+		$return = $event->getValue();
 
 		$fields[] = 'location';
 		$fields[] = 'address';
@@ -305,5 +317,4 @@ class Post extends ElggObject {
 
 		return $return;
 	}
-
 }

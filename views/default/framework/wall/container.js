@@ -146,6 +146,7 @@ define(function (require) {
 								$(this).tokenInput("clear");
 							}).trigger('clear');
 						}
+
 						$('.elgg-dropzone-preview', $form).remove();
 						$('.token-input-dropdown').hide();
 						$form.find('.wall-url').val('').trigger('clear');
@@ -164,11 +165,13 @@ define(function (require) {
 							} else {
 								$('.elgg-list-river,.wall-post-list').trigger('addFetchedItems', [data.output, null, true]);
 							}
+
 							$('.elgg-list-river,.wall-post-list').trigger('refresh', [null, false]);
 						} else {
 							$('.elgg-list-river,.wall-post-list').prepend($(data.output).children('li'));
 						}
 					}
+
 					if (data.system_messages) {
 						elgg.register_error(data.system_messages.error);
 						elgg.system_message(data.system_messages.success);
@@ -207,4 +210,3 @@ define(function (require) {
 	};
 	return wall;
 });
-

@@ -13,18 +13,27 @@ class ViewRenderingTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypewall';
 	}
 
-	public function testWallStylesheetRenders(): void {
+	/**
+     * @return void
+     */
+    public function testWallStylesheetRenders(): void {
 		$css = elgg_view('framework/wall/stylesheet.css');
 		$this->assertIsString($css);
 		// The stylesheet should produce non-trivial output.
 		$this->assertGreaterThan(0, strlen($css));
 	}
 
-	public function testWallMessageElementRenders(): void {
+	/**
+     * @return void
+     */
+    public function testWallMessageElementRenders(): void {
 		// Render with a fake entity. The element view should not throw.
 		$entity = elgg_call(ELGG_IGNORE_ACCESS, function () {
 			$user = $this->createUser();
@@ -41,12 +50,18 @@ class ViewRenderingTest extends IntegrationTestCase {
 		$entity->delete();
 	}
 
-	public function testWallPageComponentRenders(): void {
+	/**
+     * @return void
+     */
+    public function testWallPageComponentRenders(): void {
 		$output = elgg_view('page/components/wall', []);
 		$this->assertIsString($output);
 	}
 
-	public function testRiverItemRendersForPost(): void {
+	/**
+     * @return void
+     */
+    public function testRiverItemRendersForPost(): void {
 		$entity = elgg_call(ELGG_IGNORE_ACCESS, function () {
 			$user = $this->createUser();
 			$post = new Post();

@@ -11,4 +11,4 @@ $output = elgg_view('output/url', [
 ]);
 
 $vars['src'] = $url;
-echo elgg_trigger_plugin_hook('format:src', 'embed', $vars, $output);
+echo elgg_trigger_event_results('format:src', 'embed', $vars, $output);

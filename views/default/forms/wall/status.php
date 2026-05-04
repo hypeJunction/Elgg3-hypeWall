@@ -173,7 +173,7 @@ $fields[] = [
 	'value' => $entity ? $entity->container_guid : elgg_extract('container_guid', $vars, elgg_get_page_owner_guid()),
 ];
 
-$config = elgg_trigger_plugin_hook('form', 'wall', $vars, [
+$config = elgg_trigger_event_results('form', 'wall', $vars, [
 	'tools' => $tools,
 	'fields' => $fields,
 ]);
@@ -205,7 +205,7 @@ $footer = elgg_view_menu('wall-tools', [
 	'sort_by' => 'priority',
 	'items' => $tools,
 	'entity' => $entity,
-		]);
+]);
 
 $controls = [
 	[
@@ -220,14 +220,14 @@ $controls = [
 	],
 ];
 
-$controls = elgg_trigger_plugin_hook('controls', 'wall', $vars, $controls);
+$controls = elgg_trigger_event_results('controls', 'wall', $vars, $controls);
 $footer .= elgg_view_field([
 	'#type' => 'fieldset',
 	'align' => 'horizontal',
 	'justify' => 'right',
 	'class' => 'wall-footer-controls',
 	'fields' => $controls,
-		]);
+]);
 
 elgg_set_form_footer($footer);
 

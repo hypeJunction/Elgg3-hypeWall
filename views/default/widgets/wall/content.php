@@ -6,7 +6,7 @@ $entity = elgg_extract('entity', $vars);
 
 
 if ($entity->show_add_form) {
-	$content = elgg_view("framework/wall/container");
+	$content = elgg_view('framework/wall/container');
 }
 
 $owner = elgg_get_page_owner_entity();

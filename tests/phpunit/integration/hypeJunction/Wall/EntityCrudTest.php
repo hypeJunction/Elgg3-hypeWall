@@ -13,11 +13,18 @@ class EntityCrudTest extends IntegrationTestCase {
 	public function up() {}
 	public function down() {}
 
-	public function getPluginID(): string {
+	/**
+     * @return string
+     */
+    public function getPluginID(): string {
 		return 'hypewall';
 	}
 
-	private function makePost($overrides = []): Post {
+	/**
+     * @param mixed $overrides
+     * @return Post
+     */
+    private function makePost($overrides = []): Post {
 		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($overrides) {
 			$user = $overrides['__user'] ?? $this->createUser();
 			$post = new Post();
@@ -36,7 +43,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		});
 	}
 
-	public function testCreatedPostInstantiatesPostClass(): void {
+	/**
+     * @return void
+     */
+    public function testCreatedPostInstantiatesPostClass(): void {
 		$post = $this->makePost();
 		$this->assertGreaterThan(0, $post->guid);
 		$this->assertSame('object', $post->type);
@@ -44,7 +54,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testLoadedPostIsPostInstance(): void {
+	/**
+     * @return void
+     */
+    public function testLoadedPostIsPostInstance(): void {
 		$post = $this->makePost();
 		$guid = $post->guid;
 		_elgg_services()->entityCache->delete($guid);
@@ -53,7 +66,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testDescriptionPersists(): void {
+	/**
+     * @return void
+     */
+    public function testDescriptionPersists(): void {
 		$post = $this->makePost(['description' => 'persisted body']);
 		_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
@@ -61,7 +77,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testAddressMetadataPersists(): void {
+	/**
+     * @return void
+     */
+    public function testAddressMetadataPersists(): void {
 		$post = $this->makePost(['address' => 'http://example.test/article']);
 		_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
@@ -69,7 +88,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testTitleMetadataPersists(): void {
+	/**
+     * @return void
+     */
+    public function testTitleMetadataPersists(): void {
 		$post = $this->makePost(['title' => 'My title']);
 		_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
@@ -77,7 +99,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$post->delete();
 	}
 
-	public function testDeleteReturnsTruthy(): void {
+	/**
+     * @return void
+     */
+    public function testDeleteReturnsTruthy(): void {
 		// Elgg 3.x delete() may keep the row but mark disabled rather than
 		// hard-deleting (depends on registered cleanup handlers). Migration
 		// safety just needs delete() to return truthy without throwing — the
@@ -89,7 +114,10 @@ class EntityCrudTest extends IntegrationTestCase {
 		$this->assertNotFalse($result);
 	}
 
-	public function testDisplayNameForOwnerEqualsContainer(): void {
+	/**
+     * @return void
+     */
+    public function testDisplayNameForOwnerEqualsContainer(): void {
 		// When owner_guid == container_guid, the post is a status update on
 		// the user's own wall — getDisplayName() must return non-empty
 		// regardless of the templating string used.
