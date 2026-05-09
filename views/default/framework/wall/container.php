@@ -72,8 +72,7 @@ echo elgg_view('page/components/tabs', $tabs);
 echo $quick_links;
 
 ?>
-<script>
-	require(['framework/wall/container'], function (lib) {
-		lib.init();
-	});
+<script type="module">
+	import lib from 'framework/wall/container';
+	lib.init();
 </script>

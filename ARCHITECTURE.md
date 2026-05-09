@@ -1,8 +1,8 @@
-# hypeWall — Architecture (Elgg 5.x)
+# hypeWall — Architecture (Elgg 6.x)
 
 ## Summary
 
-Rich wall/status-update plugin for Elgg. Users and groups have a "wall" where
+Rich wall/status-update plugin for Elgg 6.x. Users and groups have a "wall" where
 they can post rich updates with text, embedded URLs, file attachments, and
 friend tagging. Posts appear in the activity river and trigger Elgg notifications.
 
@@ -98,3 +98,14 @@ No hard plugin dependencies declared. Optional integrations via events:
 - `Post::getDisplayName()` now declares `: string` return type (required by Elgg 5.x parent)
 - `composer.json` bumped to `php >=8.1`, `elgg/elgg ^5.0`
 - Docker stack updated to PHP 8.1, MySQL 8.0, Elgg 5.1
+
+## Migration Notes (5.x → 6.x)
+
+- `composer.json`: `elgg/elgg ~6.1.0`, added `ext-intl`
+- `elgg-plugin.php`: added `version => 6.0.0`
+- `framework/wall/container.js`: converted from AMD `define(function(require){...})` to ES module; `elgg.echo()` → `i18n.echo()` (using `import i18n from 'elgg/i18n'`); `elgg.nullFunction()` → `function(){}` (removed in 6.x)
+- `output/wall/attachments.js`: converted from AMD to ES module
+- `framework/wall/container.php`: inline `require(['framework/wall/container'], cb)` → `<script type="module">` ES import
+- `output/wall/attachments.php`: inline `require(['output/wall/attachments'], cb)` → `<script type="module">` ES import
+- Docker stack updated to Elgg 6.x (PHPUnit ^10.5)
+- No data migration required

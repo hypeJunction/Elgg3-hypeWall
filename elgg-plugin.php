@@ -8,6 +8,7 @@ use hypeJunction\Wall\Post;
 return [
 	'plugin' => [
 		'name' => 'hypeWall',
+		'version' => '6.0.0',
 		'activate_on_install' => false,
 	],
 	'bootstrap' => \hypeJunction\Wall\Bootstrap::class,

@@ -1,3 +1,16 @@
+<a name="6.0.0"></a>
+# [6.0.0] (2026-05-09)
+
+### Migration: Elgg 5.x → 6.x
+
+* **js:** `framework/wall/container.js` converted from AMD to ES module; `elgg.echo()` → `i18n.echo()`; `elgg.nullFunction()` replaced with `function(){}`
+* **js:** `output/wall/attachments.js` converted from AMD to ES module
+* **views:** inline AMD `require()` in PHP templates replaced with `<script type="module">` ES import
+* **deps:** `composer.json` bumped to `elgg/elgg ~6.1.0`; added `ext-intl`
+* **docker:** stack updated to Elgg 6.x (PHPUnit ^10.5)
+
+---
+
 <a name="7.0.0"></a>
 # [7.0.0] (2026-05-04)
 

@@ -52,8 +52,7 @@ if (!$output) {
 	return;
 }
 ?>
-<script>
-	require(['output/wall/attachments'], function (lib) {
-		lib.init();
-	});
+<script type="module">
+	import lib from 'output/wall/attachments';
+	lib.init();
 </script>
