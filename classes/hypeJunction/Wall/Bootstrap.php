@@ -29,6 +29,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * @return void
 	 */
 	public function init(): void {
+		elgg_register_event_handler('seeds', 'database', [Seeder::class, 'addSeed']);
 	}
 
 	/**
