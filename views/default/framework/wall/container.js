@@ -1,5 +1,6 @@
 import elgg from 'elgg';
 import i18n from 'elgg/i18n';
+import notify from 'elgg/notify';
 import $ from 'jquery';
 import 'jquery.form';
 
@@ -167,8 +168,8 @@ const wall = {
 				}
 
 				if (data.system_messages) {
-					elgg.register_error(data.system_messages.error);
-					elgg.system_message(data.system_messages.success);
+					notify.error(data.system_messages.error);
+					notify.success(data.system_messages.success);
 				}
 			},
 			error: function () {
