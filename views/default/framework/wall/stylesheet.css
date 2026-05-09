@@ -1,11 +1,38 @@
+:root {
+	--wall-border-radius: 3px;
+	--wall-component-margin: 1rem auto;
+	--wall-form-body-bg: #fff;
+	--wall-form-padding: 1rem;
+	--wall-footer-padding: 0.5rem 1rem;
+	--wall-footer-controls-gap: 0.5rem;
+	--wall-tagged-color: #666;
+	--wall-counter-color: #666;
+	--wall-counter-padding: 0 8px;
+	--wall-counter-font-size: 11px;
+	--wall-counter-line-height: 20px;
+	--wall-chars-counter-font-size: 12px;
+	--wall-chars-counter-margin: 0 5px 0 0;
+	--wall-overflow-color: darkred;
+	--wall-attachment-padding: 2px;
+	--wall-attachment-img-max-width: 300px;
+	--wall-attachment-img-max-height: 200px;
+	--wall-attachment-margin: 10px 0;
+	--wall-widget-item-padding: 10px;
+	--wall-field-url-margin: 5px;
+	--wall-tools-icon-font-size: 1.25rem;
+	--wall-tools-icon-padding: 0.25rem;
+	--wall-tabs-margin: -1rem -1rem 1rem;
+	--wall-tabs-padding-top: 0.5rem;
+}
+
 .wall-component {
 	border: 1px solid var(--elgg-border-color-mild);
-	border-radius: 3px;
-	margin: 1rem auto;
+	border-radius: var(--wall-border-radius);
+	margin: var(--wall-component-margin);
 }
 
 .wall-component .elgg-module {
-	border-radius: 3px;
+	border-radius: var(--wall-border-radius);
 	overflow: hidden;
 }
 
@@ -19,14 +46,14 @@
 }
 
 .wall-forms > .elgg-body {
-	padding: 1rem;
-	background: #fff;
+	padding: var(--wall-form-padding);
+	background: var(--wall-form-body-bg);
 }
 
 .wall-forms .elgg-form-footer {
 	background: var(--elgg-background-color-soft);
 	border-top: 1px solid var(--elgg-border-color-soft);
-	border-radius: 0 0 3px 3px;
+	border-radius: 0 0 var(--wall-border-radius) var(--wall-border-radius);
 	margin: 0 -1rem -1rem;
 	padding: 0;
 	display: flex;
@@ -43,7 +70,7 @@
 }
 
 .wall-forms .elgg-form-footer > * {
-	padding: 0.5rem 1rem;
+	padding: var(--wall-footer-padding);
 }
 
 .wall-forms .elgg-form-footer > .elgg-field {
@@ -62,16 +89,16 @@
 }
 
 .wall-footer-controls > .elgg-field:not(:first-child) {
-	margin-left: 0.5rem;
+	margin-left: var(--wall-footer-controls-gap);
 }
 
 .elgg-menu-wall-tools > li:not(:last-child) {
-	margin-right: 0.5rem;
+	margin-right: var(--wall-footer-controls-gap);
 }
 
 .elgg-menu-wall-tools > li > a {
-	font-size: 1.25rem;
-	padding: 0.25rem;
+	font-size: var(--wall-tools-icon-font-size);
+	padding: var(--wall-tools-icon-padding);
 	text-decoration: none;
 }
 
@@ -85,33 +112,33 @@
 .wall-tagged-location,
 .wall-tagged-attachments {
 	font-size: 90%;
-	color: #666;
+	color: var(--wall-tagged-color);
 }
 
 .wall-status-counter {
 	text-align: right;
 	left: 0;
 	bottom: 0;
-	padding: 0 8px;
-	font-size: 11px;
-	line-height: 20px;
+	padding: var(--wall-counter-padding);
+	font-size: var(--wall-counter-font-size);
+	line-height: var(--wall-counter-line-height);
 	vertical-align: middle;
-	color: #666;
+	color: var(--wall-counter-color);
 }
 
 .wall-status-counter .wall-chars-counter {
-	margin: 0 5px 0 0;
-	font-size: 12px;
+	margin: var(--wall-chars-counter-margin);
+	font-size: var(--wall-chars-counter-font-size);
 }
 
 .wall-status-counter.wall-status-counter-overflow .wall-chars-counter {
-	color: darkred;
+	color: var(--wall-overflow-color);
 	font-weight: bold;
 }
 
 .wall-attachments,
 .wall-url-preview {
-	margin: 10px 0;
+	margin: var(--wall-attachment-margin);
 }
 
 .wall-attachments img,
@@ -137,15 +164,15 @@
 }
 
 .wall-attachments-gallery > li {
-	padding: 2px;
+	padding: var(--wall-attachment-padding);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
 .wall-attachments-gallery img {
-	max-width: 300px;
-	max-height: 200px;
+	max-width: var(--wall-attachment-img-max-width);
+	max-height: var(--wall-attachment-img-max-height);
 	vertical-align: middle;
 }
 
@@ -154,7 +181,7 @@
 }
 
 .wall-widget-list > li {
-	padding: 10px;
+	padding: var(--wall-widget-item-padding);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -163,17 +190,17 @@
 .wall-field-url .elgg-input-single-checkbox {
 	font-weight: normal;
 	font-size: 90%;
-	margin: 5px;
+	margin: var(--wall-field-url-margin);
 	display: block;
 }
 
 .wall-quick-links-toggle .elgg-icon-angle-down {
-	margin-left: 0.5rem;
+	margin-left: var(--wall-footer-controls-gap);
 }
 
 .wall-component .elgg-tabs-component .elgg-tabs {
-	margin: -1rem -1rem 1rem;
+	margin: var(--wall-tabs-margin);
 	background: var(--elgg-background-color-soft);
-	padding-top: 0.5rem;
-	border-radius: 3px 3px 0 0;
+	padding-top: var(--wall-tabs-padding-top);
+	border-radius: var(--wall-border-radius) var(--wall-border-radius) 0 0;
 }
