@@ -1,6 +1,7 @@
 <?php
 
 use hypeJunction\Wall\Post;
+use hypeJunction\Wall\WallTag;
 
 $poster = elgg_get_logged_in_user_entity();
 
@@ -154,8 +155,7 @@ foreach ($friend_guids as $friend_guid) {
 			'count' => true,
 		]);
 		if (!$friend_wall_tag) {
-			$friend_wall_tag = new ElggObject();
-			$friend_wall_tag->subtype = 'wall_tag';
+			$friend_wall_tag = new WallTag();
 			$friend_wall_tag->owner_guid = $friend->guid;
 			$friend_wall_tag->container_guid = $post->guid;
 			$friend_wall_tag->access_id = $river_access_id;
@@ -197,8 +197,7 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 		return false;
 	}
 
-	$bookmark = new ElggObject;
-	$bookmark->subtype = 'bookmarks';
+	$bookmark = elgg_new_entity('object', 'bookmarks');
 	$bookmark->owner_guid = $poster->guid;
 	$bookmark->container_guid = $container->guid;
 	$bookmark->address = $address;

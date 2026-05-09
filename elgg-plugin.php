@@ -4,11 +4,12 @@ use hypeJunction\Wall\Menus;
 use hypeJunction\Wall\Notifications;
 use hypeJunction\Wall\Permissions;
 use hypeJunction\Wall\Post;
+use hypeJunction\Wall\WallTag;
 
 return [
 	'plugin' => [
 		'name' => 'hypeWall',
-		'version' => '6.0.0',
+		'version' => '7.0.0',
 		'activate_on_install' => false,
 	],
 	'bootstrap' => \hypeJunction\Wall\Bootstrap::class,
@@ -20,6 +21,15 @@ return [
 			'class' => Post::class,
 			'capabilities' => [
 				'searchable' => true,
+				'river_emittable' => true,
+			],
+		],
+		[
+			'type' => 'object',
+			'subtype' => 'wall_tag',
+			'class' => WallTag::class,
+			'capabilities' => [
+				'river_emittable' => true,
 			],
 		],
 	],

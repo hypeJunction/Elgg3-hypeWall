@@ -1,5 +1,5 @@
 .wall-component {
-	border: 1px solid $(border-color-mild);
+	border: 1px solid var(--elgg-border-color-mild);
 	border-radius: 3px;
 	margin: 1rem auto;
 }
@@ -24,8 +24,8 @@
 }
 
 .wall-forms .elgg-form-footer {
-	background: $(background-color-soft);
-	border-top: 1px solid $(border-color-soft);
+	background: var(--elgg-background-color-soft);
+	border-top: 1px solid var(--elgg-border-color-soft);
 	border-radius: 0 0 3px 3px;
 	margin: 0 -1rem -1rem;
 	padding: 0;
@@ -35,7 +35,7 @@
 	justify-content: flex-start;
 }
 
-@media only $(media-tablet-up) {
+@media only var(--elgg-media-tablet-up) {
 	.wall-forms .elgg-form-footer {
 		flex-direction: row;
 		justify-content: flex-end;
@@ -173,7 +173,7 @@
 
 .wall-component .elgg-tabs-component .elgg-tabs {
 	margin: -1rem -1rem 1rem;
-	background: $(background-color-soft);
+	background: var(--elgg-background-color-soft);
 	padding-top: 0.5rem;
 	border-radius: 3px 3px 0 0;
 }
