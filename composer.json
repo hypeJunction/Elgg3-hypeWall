@@ -1,8 +1,7 @@
 {
 	"name": "hypejunction/hypewall",
 	"type": "elgg-plugin",
-	"description": "Rich status updates for Elgg",
-	"homepage": "http://hypejunction.com",
+	"description": "Adds a social activity wall to Elgg sites, letting users post rich status updates with URL embeds, photo attachments, friend tagging, and geolocation",
 	"keywords": [
 		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
 	],

@@ -1,7 +1,7 @@
 {
 	"name": "hypeWall",
 	"version": "6.2.0",
-	"license": "SEE LICENSE IN https://hypejunction.com/license",
+	"license": "GPL-2.0-or-later",
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:hypeJunctionPro/Elgg3-hypeWall.git",
