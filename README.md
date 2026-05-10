@@ -1,6 +1,6 @@
 # hypeWall
 
-![Elgg 5.0](https://img.shields.io/badge/Elgg-5.0-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 Adds a social activity wall to Elgg sites, letting users post rich status updates with URL embeds, photo attachments, friend tagging, and geolocation.
 
@@ -28,3 +28,9 @@ Download the zip, extract into your Elgg `mod/` directory, and activate in the a
 ## License
 
 GPL-2.0-or-later
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
