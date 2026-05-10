@@ -1,44 +1,52 @@
 {
-	"name": "hypejunction/hypewall",
-	"type": "elgg-plugin",
-	"description": "Adds a social activity wall to Elgg sites, letting users post rich status updates with URL embeds, photo attachments, friend tagging, and geolocation",
-	"keywords": [
-		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
-	],
-	"license": "GPL-2.0-or-later",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "info@hypejunction.com"
-		}
-	],
-	"require": {
-		"php": ">=8.3",
-		"elgg/elgg": "~7.0.0",
-		"ext-intl": "*",
-		"composer/installers": "^2.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"hypeJunction\\Wall\\": "classes/hypeJunction/Wall/"
-		}
-	},
-	"extra": {
-		"elgg-plugin": {
-			"id": "hypewall"
-		}
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		},
-		"audit": {
-			"abandoned": "ignore",
-			"ignore": {
-				"PKSA-sd3x-9jwt-jn4s": "ckeditor 4.x bundled by Elgg core",
-				"PKSA-4d16-gn5t-2wt7": "ckeditor 4.x bundled by Elgg core",
-				"PKSA-hw62-11cy-3pk5": "ckeditor 4.x bundled by Elgg core"
-			}
-		}
-	}
+    "name": "hypejunction/hypewall",
+    "type": "elgg-plugin",
+    "description": "Adds a social activity wall to Elgg sites, letting users post rich status updates with URL embeds, photo attachments, friend tagging, and geolocation",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "wall",
+        "posts",
+        "embed",
+        "link",
+        "images"
+    ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "elgg/elgg": "~7.0.0",
+        "ext-intl": "*",
+        "composer/installers": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "hypeJunction\\Wall\\": "classes/hypeJunction/Wall/"
+        }
+    },
+    "extra": {
+        "elgg-plugin": {
+            "id": "hypewall"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        },
+        "audit": {
+            "abandoned": "ignore",
+            "ignore": {
+                "PKSA-sd3x-9jwt-jn4s": "ckeditor 4.x bundled by Elgg core",
+                "PKSA-4d16-gn5t-2wt7": "ckeditor 4.x bundled by Elgg core",
+                "PKSA-hw62-11cy-3pk5": "ckeditor 4.x bundled by Elgg core"
+            }
+        }
+    },
+    "homepage": "https://github.com/hypeJunction/Elgg3-hypeWall",
+    "version": "6.2.4"
 }
