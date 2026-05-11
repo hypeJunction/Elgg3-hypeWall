@@ -13,4 +13,5 @@ tests/.phpunit.result.cache
 /vendor/
 /mod/
 composer.lock
-Gemfile.lockdocker/.env
+Gemfile.lock
+docker/.env
