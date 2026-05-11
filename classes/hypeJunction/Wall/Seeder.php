@@ -8,7 +8,7 @@ use Elgg\Database\Seeds\Seed;
 
 class Seeder extends Seed {
 
-	public function getType(): string {
+	public static function getType(): string {
 		return 'hypewall';
 	}
 
