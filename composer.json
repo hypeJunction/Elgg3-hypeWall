@@ -3,7 +3,13 @@
 	"type": "elgg-plugin",
 	"description": "Adds a social activity wall to Elgg sites, letting users post rich status updates with URL embeds, photo attachments, friend tagging, and geolocation",
 	"keywords": [
-		"elgg", "plugin", "wall", "posts", "embed", "link", "images"
+		"elgg",
+		"plugin",
+		"wall",
+		"posts",
+		"embed",
+		"link",
+		"images"
 	],
 	"license": "GPL-2.0-or-later",
 	"authors": [
@@ -13,7 +19,7 @@
 		}
 	],
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.0",
 		"elgg/elgg": "^5.0",
 		"composer/installers": "^2.0"
 	},
