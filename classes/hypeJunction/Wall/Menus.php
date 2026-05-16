@@ -3,6 +3,7 @@
 namespace hypeJunction\Wall;
 
 use Elgg\Event;
+use Elgg\Menu\MenuItems;
 use ElggMenuItem;
 use ElggRiverItem;
 
@@ -13,7 +14,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function entityMenuSetup(Event $event): ?array {
+	public static function entityMenuSetup(Event $event): ?MenuItems {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -63,7 +64,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function riverMenuSetup(Event $event): ?array {
+	public static function riverMenuSetup(Event $event): ?MenuItems {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$item = elgg_extract('item', $params);
@@ -119,7 +120,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function ownerBlockMenuSetup(Event $event): ?array {
+	public static function ownerBlockMenuSetup(Event $event): ?MenuItems {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -145,7 +146,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function userHoverMenuSetup(Event $event): ?array {
+	public static function userHoverMenuSetup(Event $event): ?MenuItems {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -167,7 +168,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function setupCardMenu(Event $event): ?array {
+	public static function setupCardMenu(Event $event): ?MenuItems {
 		$return = $event->getValue();
 		$params = $event->getParams();
 
@@ -197,7 +198,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function setupQuickLinks(Event $event): ?array {
+	public static function setupQuickLinks(Event $event): ?MenuItems {
 		$items = $event->getValue();
 
 		$entity = $event->getEntityParam();
