@@ -34,7 +34,7 @@ if (is_callable('hypeapps_extract_tokens')) {
 	$tags = array_unique(array_merge($tags, $tokens['hashtags']));
 	
 	foreach ($tokens['usernames'] as $username) {
-		$user = get_user_by_username($username);
+		$user = elgg_get_user_by_username($username);
 		$friend_guids[] = $user->guid;
 	}
 	
