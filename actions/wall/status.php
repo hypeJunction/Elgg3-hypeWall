@@ -9,7 +9,7 @@ $guid = get_input('guid');
 $status = get_input('status', '');
 $title = htmlentities(get_input('title', ''), ENT_QUOTES, 'UTF-8');
 $location = get_input('location');
-$access_id = get_input('access_id', get_default_access());
+$access_id = get_input('access_id', elgg_get_default_access());
 $address = get_input('address');
 $upload_guids = (array) get_input('upload_guids', []);
 

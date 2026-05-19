@@ -211,7 +211,7 @@ $controls = [
 	[
 		'#type' => 'access',
 		'name' => 'access_id',
-		'value' => $entity ? $entity->access_id : get_default_access(),
+		'value' => $entity ? $entity->access_id : elgg_get_default_access(),
 		'class' => 'wall-access',
 	],
 	[
