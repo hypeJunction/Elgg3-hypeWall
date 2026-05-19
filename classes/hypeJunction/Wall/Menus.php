@@ -13,7 +13,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function entityMenuSetup(Event $event): ?array {
+	public static function entityMenuSetup(Event $event) {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -63,7 +63,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function riverMenuSetup(Event $event): ?array {
+	public static function riverMenuSetup(Event $event) {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$item = elgg_extract('item', $params);
@@ -119,7 +119,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function ownerBlockMenuSetup(Event $event): ?array {
+	public static function ownerBlockMenuSetup(Event $event) {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -145,7 +145,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function userHoverMenuSetup(Event $event): ?array {
+	public static function userHoverMenuSetup(Event $event) {
 		$return = $event->getValue();
 		$params = $event->getParams();
 		$entity = elgg_extract('entity', $params);
@@ -167,7 +167,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function setupCardMenu(Event $event): ?array {
+	public static function setupCardMenu(Event $event) {
 		$return = $event->getValue();
 		$params = $event->getParams();
 
@@ -197,7 +197,7 @@ class Menus {
 	 * @param Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function setupQuickLinks(Event $event): ?array {
+	public static function setupQuickLinks(Event $event) {
 		$items = $event->getValue();
 
 		$entity = $event->getEntityParam();
