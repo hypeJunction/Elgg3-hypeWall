@@ -9,7 +9,7 @@ if (!$post) {
 	return elgg_error_response(elgg_echo('wall:error:not_found'));
 }
 
-$relationship = (get_entity($user->guid)?->hasRelationship($post->guid, 'tagged_in') ?? false);
+$relationship = (get_entity($user->guid)?->getRelationship($post->guid, 'tagged_in') ?? null);
 if (!$relationship instanceof \ElggRelationship) {
 	return elgg_error_response(elgg_echo('wall:remove_tag:error'));
 }
