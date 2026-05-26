@@ -24,18 +24,18 @@ class Menus {
 			$params = $hook->getParams();
 		}
 
-		$entity = elgg_extract('entity', $params);
+		$entity = \elgg_extract('entity', $params);
 
 		if (!$entity instanceof Post) {
 			return $return;
 		}
 
-		$logged_in = elgg_get_logged_in_user_entity();
+		$logged_in = \elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $entity->guid)) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'remove_tag',
-						'text' => elgg_echo('wall:remove_tag'),
-						'title' => elgg_echo('wall:remove_tag'),
+						'text' => \elgg_echo('wall:remove_tag'),
+						'title' => \elgg_echo('wall:remove_tag'),
 						'priority' => 800,
 						'href' => "action/wall/remove_tag?guid=$entity->guid",
 						'is_action' => true,
@@ -45,8 +45,8 @@ class Menus {
 		if ($entity->canEdit()) {
 			$return[] = ElggMenuItem::factory([
 				'name' => 'edit',
-				'text' => elgg_echo('edit'),
-				'title' => elgg_echo('wall:edit'),
+				'text' => \elgg_echo('edit'),
+				'title' => \elgg_echo('wall:edit'),
 				'priority' => 800,
 				'href' => "wall/edit/$entity->guid",
 			]);
@@ -55,8 +55,8 @@ class Menus {
 		if ($entity->canDelete()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
-						'text' => elgg_view_icon('delete'),
-						'title' => elgg_echo('wall:delete'),
+						'text' => \elgg_view_icon('delete'),
+						'title' => \elgg_echo('wall:delete'),
 						'priority' => 900,
 						'href' => "action/entity/delete?guid=$entity->guid",
 						'is_action' => true,
@@ -83,7 +83,7 @@ class Menus {
 			$params = $hook->getParams();
 		}
 
-		$item = elgg_extract('item', $params);
+		$item = \elgg_extract('item', $params);
 
 		if (!($item instanceof ElggRiverItem)) {
 			return $return;
@@ -95,12 +95,12 @@ class Menus {
 			return;
 		}
 
-		$logged_in = elgg_get_logged_in_user_entity();
+		$logged_in = \elgg_get_logged_in_user_entity();
 		if (check_entity_relationship($logged_in->guid, 'tagged_in', $object->guid)) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'remove_tag',
-						'text' => elgg_echo('wall:remove_tag'),
-						'title' => elgg_echo('wall:remove_tag'),
+						'text' => \elgg_echo('wall:remove_tag'),
+						'title' => \elgg_echo('wall:remove_tag'),
 						'priority' => 800,
 						'href' => "action/wall/remove_tag?guid=$object->guid",
 						'is_action' => true,
@@ -110,8 +110,8 @@ class Menus {
 		if ($object->canEdit()) {
 			$return[] = ElggMenuItem::factory([
 				'name' => 'edit',
-				'text' => elgg_echo('edit'),
-				'title' => elgg_echo('wall:edit'),
+				'text' => \elgg_echo('edit'),
+				'title' => \elgg_echo('wall:edit'),
 				'priority' => 800,
 				'href' => "wall/edit/$object->guid",
 			]);
@@ -120,8 +120,8 @@ class Menus {
 		if ($object->canDelete()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
-						'text' => elgg_view_icon('delete'),
-						'title' => elgg_echo('wall:delete'),
+						'text' => \elgg_view_icon('delete'),
+						'title' => \elgg_echo('wall:delete'),
 						'priority' => 900,
 						'href' => "action/entity/delete?guid=$object->guid",
 						'is_action' => true,
@@ -148,18 +148,18 @@ class Menus {
 			$params = $hook->getParams();
 		}
 
-		$entity = elgg_extract('entity', $params);
+		$entity = \elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
-						'text' => elgg_echo('wall'),
+						'text' => \elgg_echo('wall'),
 						'href' => "wall/owner/{$entity->username}",
 			]);
 		} else if ($entity instanceof \ElggGroup && $entity->wall_enable == 'yes') {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
-						'text' => elgg_echo('wall:groups'),
+						'text' => \elgg_echo('wall:groups'),
 						'href' => "wall/group/{$entity->guid}",
 			]);
 		}
@@ -182,12 +182,12 @@ class Menus {
 			$return = $hook->getValue();
 			$params = $hook->getParams();
 		}
-		$entity = elgg_extract('entity', $params);
+		$entity = \elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'wall',
-						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? elgg_echo('wall:write') : elgg_echo('wall:view'),
+						'text' => ($entity->canWriteToContainer(0, 'object', Post::SUBTYPE)) ? \elgg_echo('wall:write') : \elgg_echo('wall:view'),
 						'href' => "wall/owner/{$entity->username}",
 						'section' => 'action',
 						'icon' => 'comments-o',
@@ -212,23 +212,23 @@ class Menus {
 			$params = $hook->getParams();
 		}
 
-		$user = elgg_get_logged_in_user_entity();
+		$user = \elgg_get_logged_in_user_entity();
 		if (!$user) {
 			return;
 		}
 
-		$href = elgg_extract('href', $params);
+		$href = \elgg_extract('href', $params);
 		if (!$href) {
 			return;
 		}
 
 		$return[] = ElggMenuItem::factory([
 			'name' => 'repost',
-			'href' => elgg_http_add_url_query_elements("wall/owner/$user->username", [
+			'href' => \elgg_http_add_url_query_elements("wall/owner/$user->username", [
 				'address' => $href,
 			]),
-			'text' => elgg_view_icon('retweet'),
-			'title' => elgg_echo('wall:repost'),
+			'text' => \elgg_view_icon('retweet'),
+			'title' => \elgg_echo('wall:repost'),
 		]);
 
 		return $return;
@@ -251,7 +251,7 @@ class Menus {
 
 		foreach ($types as $type) {
 			try {
-				$url = elgg_generate_url("add:object:$type", [
+				$url = \elgg_generate_url("add:object:$type", [
 					'guid' => $entity->guid,
 				]);
 			} catch (\Exception $ex) {
@@ -264,7 +264,7 @@ class Menus {
 			$items[] = ElggMenuItem::factory([
 				'name' => $type,
 				'href' => $url,
-				'text' => elgg_echo("add:object:$type"),
+				'text' => \elgg_echo("add:object:$type"),
 			]);
 		}
 

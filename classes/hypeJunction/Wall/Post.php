@@ -28,9 +28,9 @@ class Post extends ElggObject {
 		$owner = $this->getOwnerEntity();
 		$container = $this->getContainerEntity();
 		if ($owner->guid == $container->guid) {
-			return elgg_echo('wall:post:status_update', [elgg_echo('wall:byline', [$owner->getDisplayName()])]);
+			return \elgg_echo('wall:post:status_update', [\elgg_echo('wall:byline', [$owner->getDisplayName()])]);
 		} else if ($owner) {
-			return elgg_echo('wall:post:wall_to_wall', [elgg_echo('wall:byline', [$owner->getDisplayName()])]);
+			return \elgg_echo('wall:post:wall_to_wall', [\elgg_echo('wall:byline', [$owner->getDisplayName()])]);
 		}
 		return parent::getDisplayName();
 	}
@@ -42,12 +42,12 @@ class Post extends ElggObject {
 	 * @return string
 	 */
 	public function formatMessage($include_address = false) {
-		$output = elgg_view('object/hjwall/elements/message', [
+		$output = \elgg_view('object/hjwall/elements/message', [
 			'entity' => $this,
 			'include_address' => $include_address,
 		]);
 
-		return elgg_trigger_plugin_hook('message:format', 'wall', ['entity' => $this], $output);
+		return \elgg_trigger_plugin_hook('message:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -59,21 +59,21 @@ class Post extends ElggObject {
 		$attachments = [];
 
 		if ($this->address) {
-			$attachments[] = elgg_view('output/wall/url', [
+			$attachments[] = \elgg_view('output/wall/url', [
 				'value' => $this->address,
 			]);
 		}
 
 		$attachments[] = $this->html;
 
-		$attachments[] = elgg_view('output/wall/attachments', [
+		$attachments[] = \elgg_view('output/wall/attachments', [
 			'entity' => $this,
 		]);
 
 		$attachments = array_filter($attachments);
 
 		$output = (count($attachments)) ? implode('', $attachments) : false;
-		return elgg_trigger_plugin_hook('attachments:format', 'wall', ['entity' => $this], $output);
+		return \elgg_trigger_plugin_hook('attachments:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Post extends ElggObject {
 		$subject = $this->getOwnerEntity();
 		$wall_owner = $this->getContainerEntity();
 
-		if ($wall_owner->guid == $subject->guid || $wall_owner->guid == elgg_get_page_owner_guid()) {
+		if ($wall_owner->guid == $subject->guid || $wall_owner->guid == \elgg_get_page_owner_guid()) {
 			$owned = true;
 		}
 
@@ -94,7 +94,7 @@ class Post extends ElggObject {
 		}
 
 		if ($subject) {
-			$summary[] = elgg_view('output/url', [
+			$summary[] = \elgg_view('output/url', [
 				'text' => $subject->name,
 				'href' => $subject->getURL(),
 				'class' => 'elgg-river-subject',
@@ -102,15 +102,15 @@ class Post extends ElggObject {
 		}
 
 		if ($this->address) {
-			$summary[] = elgg_echo('wall:new:address');
+			$summary[] = \elgg_echo('wall:new:address');
 		} else {
-			$files = elgg_get_entities([
+			$files = \elgg_get_entities([
 				'relationship' => 'attached',
 				'relationship_guid' => $this->guid,
 				'count' => true,
 			]);
 			if ($files) {
-				$images = elgg_get_entities([
+				$images = \elgg_get_entities([
 					'types' => 'object',
 					'subtypes' => 'file',
 					'metadata_name_value_pairs' => [
@@ -121,28 +121,28 @@ class Post extends ElggObject {
 					'count' => true,
 				]);
 				if ($files == $images) {
-					$summary[] = elgg_echo('wall:new:images', [$images]);
+					$summary[] = \elgg_echo('wall:new:images', [$images]);
 				} else if (!$images) {
-					$summary[] = elgg_echo('wall:new:items', [$files]);
+					$summary[] = \elgg_echo('wall:new:items', [$files]);
 				} else {
-					$summary[] = elgg_echo('wall:new:attachments', [$images, $files - $images]);
+					$summary[] = \elgg_echo('wall:new:attachments', [$images, $files - $images]);
 				}
 			} else if (!$owned && !$group_wall) {
-				$summary[] = elgg_echo('wall:new:status');
+				$summary[] = \elgg_echo('wall:new:status');
 			}
 		}
 
 		if (!$owned && !$group_wall) {
-			$wall_owner_link = elgg_view('output/url', [
+			$wall_owner_link = \elgg_view('output/url', [
 				'text' => $wall_owner->name,
 				'href' => $wall_owner->getURL(),
 				'class' => 'elgg-river-object',
 			]);
-			$summary[] = elgg_echo('wall:owner:suffix', [$wall_owner_link]);
+			$summary[] = \elgg_echo('wall:owner:suffix', [$wall_owner_link]);
 		}
 
 		$output = implode(' ', $summary);
-		return elgg_trigger_plugin_hook('summary:format', 'wall', ['entity' => $this], $output);
+		return \elgg_trigger_plugin_hook('summary:format', 'wall', ['entity' => $this], $output);
 	}
 
 	/**
@@ -164,13 +164,13 @@ class Post extends ElggObject {
 
 		foreach ($attachments as $attachment) {
 			if ($format == 'links') {
-				$attachment_tags[] = elgg_view('output/url', [
+				$attachment_tags[] = \elgg_view('output/url', [
 					'text' => (isset($attachment->name)) ? $attachment->name : $attachment->title,
 					'href' => $attachment->getURL(),
 					'is_trusted' => true
 				]);
 			} else if ($format == 'icons') {
-				$attachment_tags[] = elgg_view_entity_icon($attachment, $size, [
+				$attachment_tags[] = \elgg_view_entity_icon($attachment, $size, [
 					'class' => 'wall-post-tag-icon',
 					'use_hover' => false
 				]);
@@ -203,13 +203,13 @@ class Post extends ElggObject {
 
 		foreach ($tags as $tag) {
 			if ($format == 'links') {
-				$tagged_friends[] = elgg_view('output/url', [
+				$tagged_friends[] = \elgg_view('output/url', [
 					'text' => (isset($tag->name)) ? $tag->name : $tag->title,
 					'href' => $tag->getURL(),
 					'is_trusted' => true
 				]);
 			} else if ($format == 'icons') {
-				$tagged_friends[] = elgg_view_entity_icon($tag, $size, [
+				$tagged_friends[] = \elgg_view_entity_icon($tag, $size, [
 					'class' => 'wall-post-tag-icon',
 					'use_hover' => false
 				]);

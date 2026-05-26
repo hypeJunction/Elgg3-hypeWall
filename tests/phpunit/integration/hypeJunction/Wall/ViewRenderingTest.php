@@ -18,7 +18,7 @@ class ViewRenderingTest extends IntegrationTestCase {
 	}
 
 	public function testWallStylesheetRenders(): void {
-		$css = elgg_view('framework/wall/stylesheet.css');
+		$css = \elgg_view('framework/wall/stylesheet.css');
 		$this->assertIsString($css);
 		// The stylesheet should produce non-trivial output.
 		$this->assertGreaterThan(0, strlen($css));
@@ -26,7 +26,7 @@ class ViewRenderingTest extends IntegrationTestCase {
 
 	public function testWallMessageElementRenders(): void {
 		// Render with a fake entity. The element view should not throw.
-		$entity = elgg_call(ELGG_IGNORE_ACCESS, function () {
+		$entity = \elgg_call(ELGG_IGNORE_ACCESS, function () {
 			$user = $this->createUser();
 			$post = new Post();
 			$post->owner_guid = $user->guid;
@@ -36,18 +36,18 @@ class ViewRenderingTest extends IntegrationTestCase {
 			$post->save();
 			return $post;
 		});
-		$output = elgg_view('object/hjwall/elements/message', ['entity' => $entity]);
+		$output = \elgg_view('object/hjwall/elements/message', ['entity' => $entity]);
 		$this->assertIsString($output);
 		$entity->delete();
 	}
 
 	public function testWallPageComponentRenders(): void {
-		$output = elgg_view('page/components/wall', []);
+		$output = \elgg_view('page/components/wall', []);
 		$this->assertIsString($output);
 	}
 
 	public function testRiverItemRendersForPost(): void {
-		$entity = elgg_call(ELGG_IGNORE_ACCESS, function () {
+		$entity = \elgg_call(ELGG_IGNORE_ACCESS, function () {
 			$user = $this->createUser();
 			$post = new Post();
 			$post->owner_guid = $user->guid;
@@ -61,7 +61,7 @@ class ViewRenderingTest extends IntegrationTestCase {
 		// river/object/hjwall/create takes $vars['item'] as an ElggRiverItem.
 		// Just asserting the view file resolves and the include doesn't throw
 		// is enough for migration coverage; full river render needs a river entry.
-		$this->assertTrue(elgg_view_exists('river/object/hjwall/create'));
+		$this->assertTrue(\elgg_view_exists('river/object/hjwall/create'));
 		$entity->delete();
 	}
 }

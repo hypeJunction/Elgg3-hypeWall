@@ -18,7 +18,7 @@ class EntityCrudTest extends IntegrationTestCase {
 	}
 
 	private function makePost($overrides = []): Post {
-		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($overrides) {
+		return \elgg_call(ELGG_IGNORE_ACCESS, function () use ($overrides) {
 			$user = $overrides['__user'] ?? $this->createUser();
 			$post = new Post();
 			$post->owner_guid = $overrides['owner_guid'] ?? $user->guid;
@@ -47,7 +47,7 @@ class EntityCrudTest extends IntegrationTestCase {
 	public function testLoadedPostIsPostInstance(): void {
 		$post = $this->makePost();
 		$guid = $post->guid;
-		_elgg_services()->entityCache->delete($guid);
+		\_elgg_services()->entityCache->delete($guid);
 		$loaded = get_entity($guid);
 		$this->assertInstanceOf(Post::class, $loaded);
 		$post->delete();
@@ -55,7 +55,7 @@ class EntityCrudTest extends IntegrationTestCase {
 
 	public function testDescriptionPersists(): void {
 		$post = $this->makePost(['description' => 'persisted body']);
-		_elgg_services()->entityCache->delete($post->guid);
+		\_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
 		$this->assertSame('persisted body', (string) $loaded->description);
 		$post->delete();
@@ -63,7 +63,7 @@ class EntityCrudTest extends IntegrationTestCase {
 
 	public function testAddressMetadataPersists(): void {
 		$post = $this->makePost(['address' => 'http://example.test/article']);
-		_elgg_services()->entityCache->delete($post->guid);
+		\_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
 		$this->assertSame('http://example.test/article', (string) $loaded->address);
 		$post->delete();
@@ -71,7 +71,7 @@ class EntityCrudTest extends IntegrationTestCase {
 
 	public function testTitleMetadataPersists(): void {
 		$post = $this->makePost(['title' => 'My title']);
-		_elgg_services()->entityCache->delete($post->guid);
+		\_elgg_services()->entityCache->delete($post->guid);
 		$loaded = get_entity($post->guid);
 		$this->assertSame('My title', (string) $loaded->title);
 		$post->delete();
@@ -83,7 +83,7 @@ class EntityCrudTest extends IntegrationTestCase {
 		// safety just needs delete() to return truthy without throwing — the
 		// actual storage semantics are tested by Elgg core.
 		$post = $this->makePost();
-		$result = elgg_call(ELGG_IGNORE_ACCESS, function () use ($post) {
+		$result = \elgg_call(ELGG_IGNORE_ACCESS, function () use ($post) {
 			return $post->delete();
 		});
 		$this->assertNotFalse($result);

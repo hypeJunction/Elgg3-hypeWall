@@ -25,9 +25,9 @@ class Permissions {
 			$return = $hook->getValue();
 			$params = $hook->getParams();
 		}
-		$container = elgg_extract('container', $params);
-		$user = elgg_extract('user', $params);
-		$subtype = elgg_extract('subtype', $params);
+		$container = \elgg_extract('container', $params);
+		$user = \elgg_extract('user', $params);
+		$subtype = \elgg_extract('subtype', $params);
 
 		if ($subtype !== Post::SUBTYPE) {
 			return $return;
@@ -44,8 +44,8 @@ class Permissions {
 		if ($container->isFriend($user)) {
 			return true;
 		} else {
-			$third_party_wall_global = elgg_get_plugin_setting('third_party_wall', 'hypewall');
-			$third_party_wall_user = elgg_get_plugin_user_setting('third_party_wall', $container->guid, 'hypewall');
+			$third_party_wall_global = \elgg_get_plugin_setting('third_party_wall', 'hypewall');
+			$third_party_wall_user = \elgg_get_plugin_user_setting('third_party_wall', $container->guid, 'hypewall');
 
 			if ($third_party_wall_global && $third_party_wall_user) {
 				return true;
