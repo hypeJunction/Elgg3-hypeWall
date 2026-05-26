@@ -2,8 +2,8 @@
 
 namespace hypeJunction\Wall;
 
-$url = elgg_extract('value', $vars);
-$output = elgg_view('output/url', [
+$url = \elgg_extract('value', $vars);
+$output = \elgg_view('output/url', [
 	'href' => $url,
 	'text' => $url,
 	'title' => 'oembed',
@@ -11,4 +11,4 @@ $output = elgg_view('output/url', [
 ]);
 
 $vars['src'] = $url;
-echo elgg_trigger_event_results('format:src', 'embed', $vars, $output);
+echo \elgg_trigger_event_results('format:src', 'embed', $vars, $output);

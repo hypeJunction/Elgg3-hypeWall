@@ -38,7 +38,7 @@ class Seeder extends Seed {
 	}
 
 	public function unseed(): void {
-		$batch = elgg_get_entities([
+		$batch = \elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'hjwall',
 			'metadata_name' => '__faker',
