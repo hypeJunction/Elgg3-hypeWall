@@ -255,7 +255,7 @@ class Post extends ElggObject {
 	 * @param \Elgg\Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function getGraphAlias(\Elgg\Event $event): ?array {
+	public static function getGraphAlias(\Elgg\Event $event) {
 		$return = $event->getValue();
 		$return['object'][self::SUBTYPE] = ':wall';
 		return $return;
@@ -265,7 +265,7 @@ class Post extends ElggObject {
 	 * @param \Elgg\Event $event Plugin event object
 	 * @return ?array
 	 */
-	public static function getPostProperties(\Elgg\Event $event): ?array {
+	public static function getPostProperties(\Elgg\Event $event) {
 		$return = $event->getValue();
 
 		$fields[] = 'location';
