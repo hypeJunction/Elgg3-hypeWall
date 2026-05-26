@@ -17,18 +17,14 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function entityMenuSetup(\Elgg\Hook $hook) {
-		$type = $hook->getType();
-
-		$return = $hook->getValue();
-
+	public static function entityMenuSetup($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$hook->getParams() = $hook->getParams();
+			$params = $hook->getParams();
 		}
 
-		$entity = $hook->getParam('entity');
+		$entity = \elgg_extract('entity', $params);
 
 		if (!$entity instanceof Post) {
 			return $return;
@@ -80,18 +76,14 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function riverMenuSetup(\Elgg\Hook $hook) {
-		$type = $hook->getType();
-
-		$return = $hook->getValue();
-
+	public static function riverMenuSetup($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$hook->getParams() = $hook->getParams();
+			$params = $hook->getParams();
 		}
 
-		$item = $hook->getParam('item');
+		$item = \elgg_extract('item', $params);
 
 		if (!($item instanceof ElggRiverItem)) {
 			return $return;
@@ -149,18 +141,14 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function ownerBlockMenuSetup(\Elgg\Hook $hook) {
-		$type = $hook->getType();
-
-		$return = $hook->getValue();
-
+	public static function ownerBlockMenuSetup($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$hook->getParams() = $hook->getParams();
+			$params = $hook->getParams();
 		}
 
-		$entity = $hook->getParam('entity');
+		$entity = \elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
@@ -188,17 +176,13 @@ class Menus {
 	 * @param array  $params Additional params
 	 * @return array Updated menu
 	 */
-	public static function userHoverMenuSetup(\Elgg\Hook $hook) {
-		$type = $hook->getType();
-
-		$return = $hook->getValue();
-
+	public static function userHoverMenuSetup($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$hook->getParams() = $hook->getParams();
+			$params = $hook->getParams();
 		}
-		$entity = $hook->getParam('entity');
+		$entity = \elgg_extract('entity', $params);
 
 		if ($entity instanceof \ElggUser) {
 			$return[] = ElggMenuItem::factory([
@@ -221,15 +205,11 @@ class Menus {
 	 * @param array          $params Hook params
 	 * @return ElggMenuItem[]
 	 */
-	public static function setupCardMenu(\Elgg\Hook $hook) {
-		$type = $hook->getType();
-
-		$return = $hook->getValue();
-
+	public static function setupCardMenu($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$hook->getParams() = $hook->getParams();
+			$params = $hook->getParams();
 		}
 
 		$user = \elgg_get_logged_in_user_entity();
@@ -237,7 +217,7 @@ class Menus {
 			return;
 		}
 
-		$href = $hook->getParam('href');
+		$href = \elgg_extract('href', $params);
 		if (!$href) {
 			return;
 		}
