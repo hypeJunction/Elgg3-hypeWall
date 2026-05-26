@@ -19,15 +19,19 @@ class Permissions {
 	 * @param array   $params Additional params
 	 * @return boolean Filtered permission
 	 */
-	public static function containerPermissionsCheck($hook, $type = null, $return = null, $params = null) {
+	public static function containerPermissionsCheck(\Elgg\Hook $hook) {
+		$type = $hook->getType();
+
+		$return = $hook->getValue();
+
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
-			$params = $hook->getParams();
+			$hook->getParams() = $hook->getParams();
 		}
-		$container = \elgg_extract('container', $params);
-		$user = \elgg_extract('user', $params);
-		$subtype = \elgg_extract('subtype', $params);
+		$container = $hook->getParam('container');
+		$user = $hook->getParam('user');
+		$subtype = $hook->getParam('subtype');
 
 		if ($subtype !== Post::SUBTYPE) {
 			return $return;
