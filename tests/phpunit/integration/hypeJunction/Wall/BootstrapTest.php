@@ -31,7 +31,7 @@ class BootstrapTest extends IntegrationTestCase {
      * @return void
      */
     public function testPluginLoadable(): void {
-		$plugin = elgg_get_plugin_from_id('hypewall');
+		$plugin = \elgg_get_plugin_from_id('hypewall');
 		$this->assertNotNull($plugin);
 		$this->assertNotFalse($plugin->isActive());
 	}
@@ -41,14 +41,14 @@ class BootstrapTest extends IntegrationTestCase {
      * @return void
      */
     public function testStatusActionRegistered(): void {
-		$this->assertTrue(elgg_action_exists('wall/status'));
+		$this->assertTrue(\elgg_action_exists('wall/status'));
 	}
 
 	/**
      * @return void
      */
     public function testRemoveTagActionRegistered(): void {
-		$this->assertTrue(elgg_action_exists('wall/remove_tag'));
+		$this->assertTrue(\elgg_action_exists('wall/remove_tag'));
 	}
 
 	/**
@@ -63,7 +63,7 @@ class BootstrapTest extends IntegrationTestCase {
 		// Test asserts the CURRENT state (action not registered) so the assertion
 		// flips when the gap is closed and forces a review.
 		$this->assertFalse(
-			elgg_action_exists('wall/geopositioning/update'),
+			\elgg_action_exists('wall/geopositioning/update'),
 			'Geopositioning action should remain MISSING until the Phase 0 feature merge from legacy hypeWall happens. Update this test when the file is restored.'
 		);
 	}
@@ -80,7 +80,7 @@ class BootstrapTest extends IntegrationTestCase {
      * @return void
      */
     public function testHjwallEntityClassMapped(): void {
-		$class = elgg_get_entity_class('object', Post::SUBTYPE);
+		$class = \elgg_get_entity_class('object', Post::SUBTYPE);
 		$this->assertSame(Post::class, $class);
 	}
 
@@ -182,34 +182,34 @@ class BootstrapTest extends IntegrationTestCase {
      * @return void
      */
     public function testWallFormViewExists(): void {
-		$this->assertTrue(elgg_view_exists('forms/wall/status'));
+		$this->assertTrue(\elgg_view_exists('forms/wall/status'));
 	}
 
 	/**
      * @return void
      */
     public function testWallMessageViewExists(): void {
-		$this->assertTrue(elgg_view_exists('object/hjwall/elements/message'));
+		$this->assertTrue(\elgg_view_exists('object/hjwall/elements/message'));
 	}
 
 	/**
      * @return void
      */
     public function testRiverItemViewExists(): void {
-		$this->assertTrue(elgg_view_exists('river/object/hjwall/create'));
+		$this->assertTrue(\elgg_view_exists('river/object/hjwall/create'));
 	}
 
 	/**
      * @return void
      */
     public function testWallStylesheetViewExists(): void {
-		$this->assertTrue(elgg_view_exists('framework/wall/stylesheet.css'));
+		$this->assertTrue(\elgg_view_exists('framework/wall/stylesheet.css'));
 	}
 
 	/**
      * @return void
      */
     public function testWallPageComponentViewExists(): void {
-		$this->assertTrue(elgg_view_exists('page/components/wall'));
+		$this->assertTrue(\elgg_view_exists('page/components/wall'));
 	}
 }

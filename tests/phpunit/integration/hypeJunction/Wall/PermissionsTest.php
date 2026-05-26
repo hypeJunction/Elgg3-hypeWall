@@ -25,7 +25,7 @@ class PermissionsTest extends IntegrationTestCase {
      * @return Post
      */
     private function makePost($owner): Post {
-		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($owner) {
+		return \elgg_call(ELGG_IGNORE_ACCESS, function () use ($owner) {
 			$post = new Post();
 			$post->owner_guid = $owner->guid;
 			$post->container_guid = $owner->guid;

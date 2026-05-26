@@ -28,7 +28,7 @@ class HooksTest extends IntegrationTestCase {
     public function testLikableHookReturnsTrueForHjwall(): void {
 		// likes:is_likable hook for object:hjwall is registered to
 		// Elgg\Values::getTrue, so triggering it must return true.
-		$result = elgg_trigger_plugin_hook('likes:is_likable', 'object:hjwall', [], false);
+		$result = \elgg_trigger_plugin_hook('likes:is_likable', 'object:hjwall', [], false);
 		$this->assertTrue(
 			(bool) $result,
 			'likes:is_likable hook for object:hjwall must return true (registers Elgg\\Values::getTrue)'
@@ -40,7 +40,7 @@ class HooksTest extends IntegrationTestCase {
      */
     public function testLikableHookForOtherSubtypeUntouched(): void {
 		// Sanity check that the hook is NOT globally hijacked.
-		$result = elgg_trigger_plugin_hook('likes:is_likable', 'object:nosuchtype', [], false);
+		$result = \elgg_trigger_plugin_hook('likes:is_likable', 'object:nosuchtype', [], false);
 		$this->assertFalse((bool) $result);
 	}
 
@@ -55,7 +55,7 @@ class HooksTest extends IntegrationTestCase {
 		// throw" — the actual permission outcome depends on test fixture state.
 		$user = $this->createUser();
 		$container = $this->createUser();
-		$result = elgg_trigger_plugin_hook('container_permissions_check', 'object', [
+		$result = \elgg_trigger_plugin_hook('container_permissions_check', 'object', [
 			'container' => $container,
 			'user' => $user,
 			'subtype' => Post::SUBTYPE,
