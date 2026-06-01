@@ -85,14 +85,6 @@ return [
         ],
     ],
 
-    'events' => [
-        'publish' => [
-            'object' => [
-                Notifications::class . '::sendCustomNotifications' => [],
-            ],
-        ],
-    ],
-
     'notifications' => [
         'object' => [
             'hjwall' => [
@@ -130,6 +122,14 @@ return [
         ],
         'graph:properties' => [
             'object:hjwall' => [Post::class . '::getPostProperties' => []],
+        ],
+    ],
+
+    'events' => [
+        'publish' => [
+            'object' => [
+                Notifications::class . '::sendCustomNotifications' => [],
+            ],
         ],
     ],
 
