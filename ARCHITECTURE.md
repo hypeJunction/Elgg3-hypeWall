@@ -98,3 +98,15 @@ No hard plugin dependencies declared. Optional integrations via events:
 - `Post::getDisplayName()` now declares `: string` return type (required by Elgg 5.x parent)
 - `composer.json` bumped to `php >=8.1`, `elgg/elgg ^5.0`
 - Docker stack updated to PHP 8.1, MySQL 8.0, Elgg 5.1
+
+## Seeding
+
+This plugin owns the following entity types and ships a `Seeder` subclass:
+
+- `object/hjwall`
+
+**Seed dev/QA data:**
+```bash
+php elgg-cli database:seed --type=hypewall --limit=10
+php elgg-cli database:unseed --type=hypewall
+```

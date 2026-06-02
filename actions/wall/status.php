@@ -8,7 +8,7 @@ $guid = get_input('guid');
 $status = get_input('status', '');
 $title = htmlentities(get_input('title', ''), ENT_QUOTES, 'UTF-8');
 $location = get_input('location');
-$access_id = get_input('access_id', get_default_access());
+$access_id = get_input('access_id', elgg_get_default_access());
 $address = get_input('address');
 $upload_guids = (array) get_input('upload_guids', []);
 
@@ -145,32 +145,31 @@ foreach ($friend_guids as $friend_guid) {
 
 	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypewall', ACCESS_FRIEND);
 	if ($river_access_id && $new_tag) {
-		$ia = elgg_set_ignore_access(true);
-		$friend_wall_tag = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'wall_tag',
-			'owner_guids' => $friend->guid,
-			'container_guids' => $post->guid,
-			'count' => true,
-		]);
-		if (!$friend_wall_tag) {
-			$friend_wall_tag = new ElggObject();
-			$friend_wall_tag->subtype = 'wall_tag';
-			$friend_wall_tag->owner_guid = $friend->guid;
-			$friend_wall_tag->container_guid = $post->guid;
-			$friend_wall_tag->access_id = $river_access_id;
-			$friend_wall_tag->relationship_id = $new_tag;
-			$friend_wall_tag->save();
-
-			elgg_create_river_item([
-				'view' => 'river/relationship/tagged/create',
-				'action_type' => 'tagged',
-				'subject_guid' => $friend->guid,
-				'object_guid' => $friend_wall_tag->guid,
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($friend, $post, $river_access_id, $new_tag) {
+			$friend_wall_tag = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => 'wall_tag',
+				'owner_guids' => $friend->guid,
+				'container_guids' => $post->guid,
+				'count' => true,
 			]);
-		}
+			if (!$friend_wall_tag) {
+				$friend_wall_tag = new ElggObject();
+				$friend_wall_tag->subtype = 'wall_tag';
+				$friend_wall_tag->owner_guid = $friend->guid;
+				$friend_wall_tag->container_guid = $post->guid;
+				$friend_wall_tag->access_id = $river_access_id;
+				$friend_wall_tag->relationship_id = $new_tag;
+				$friend_wall_tag->save();
 
-		elgg_set_ignore_access($ia);
+				elgg_create_river_item([
+					'view' => 'river/relationship/tagged/create',
+					'action_type' => 'tagged',
+					'subject_guid' => $friend->guid,
+					'object_guid' => $friend_wall_tag->guid,
+				]);
+			}
+		});
 	}
 }
 
