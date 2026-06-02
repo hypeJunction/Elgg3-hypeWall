@@ -221,7 +221,12 @@ class Post extends ElggObject {
 		return $tagged_friends;
 	}
 
-	public static function getTaggedUsersProp(PropertyInterface $prop, Post $post) {
+	/**
+     * @param PropertyInterface $prop
+     * @param Post $post
+     * @return mixed
+     */
+    public static function getTaggedUsersProp(PropertyInterface $prop, Post $post) {
 		return new BatchResult('elgg_get_entities', [
 			'types' => 'user',
 			'relationship' => 'tagged_in',
@@ -231,7 +236,12 @@ class Post extends ElggObject {
 		]);
 	}
 
-	public static function getAttachmentsProp(PropertyInterface $prop, Post $post) {
+	/**
+     * @param PropertyInterface $prop
+     * @param Post $post
+     * @return mixed
+     */
+    public static function getAttachmentsProp(PropertyInterface $prop, Post $post) {
 		return new BatchResult('elgg_get_entities', [
 			'relationship' => 'attached',
 			'relationship_guid' => (int) $post->guid,
@@ -239,7 +249,14 @@ class Post extends ElggObject {
 		]);
 	}
 
-	public static function getGraphAlias($hook, $type = null, $return = null, $params = null) {
+	/**
+     * @param mixed $hook
+     * @param mixed $type
+     * @param mixed $return
+     * @param mixed $params
+     * @return mixed
+     */
+    public static function getGraphAlias($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();
@@ -249,7 +266,14 @@ class Post extends ElggObject {
 		return $return;
 	}
 
-	public static function getPostProperties($hook, $type = null, $return = null, $params = null) {
+	/**
+     * @param mixed $hook
+     * @param mixed $type
+     * @param mixed $return
+     * @param mixed $params
+     * @return mixed
+     */
+    public static function getPostProperties($hook, $type = null, $return = null, $params = null) {
 		if ($hook instanceof \Elgg\Hook) {
 			$type = $hook->getType();
 			$return = $hook->getValue();

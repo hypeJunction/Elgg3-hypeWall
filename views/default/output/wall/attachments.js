@@ -6,7 +6,7 @@ define(function (require) {
 			var options = {
 				photo: true,
 			};
-			lightbox.bind('.wall-popup-link', options, false);
+			lightbox.on('.wall-popup-link', options, false);
 		}
 	};
 

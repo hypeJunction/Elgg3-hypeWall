@@ -52,10 +52,10 @@ $view_item = function($wall_post) use ($item) {
 if ($wall_post->getSubtype() == 'wall_tag') {
 	// river access is no longer respected, so we are creating a new wall tag object with the appropriate access
 	// wall post access id might differ, so we need ignored access
-	$ia = elgg_set_ignore_access(true);
-	$wall_post = $wall_post->getContainerEntity();
-	echo $view_item($wall_post);
-	elgg_set_ignore_access($ia);
+	echo elgg_call(ELGG_IGNORE_ACCESS, function() use ($wall_post, $view_item) {
+		$wall_post = $wall_post->getContainerEntity();
+		return $view_item($wall_post);
+	});
 } else {
 	echo $view_item($wall_post);
 }

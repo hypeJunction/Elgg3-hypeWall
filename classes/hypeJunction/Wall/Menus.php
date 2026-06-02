@@ -234,7 +234,11 @@ class Menus {
 		return $return;
 	}
 
-	public static function setupQuickLinks(Hook $hook) {
+	/**
+     * @param Hook $hook
+     * @return mixed
+     */
+    public static function setupQuickLinks(Hook $hook) {
 
 		$items = $hook->getValue();
 

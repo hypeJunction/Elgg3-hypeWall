@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var elgg = require('elgg');
+	var i18n = require('elgg/i18n');
 	var $ = require('jquery');
 	require('jquery.form');
 
@@ -135,14 +136,14 @@ define(function (require) {
 					widget: $form.closest('.elgg-widgets').length
 				},
 				beforeSend: function () {
-					$form.find('[type="submit"]').addClass('elgg-state-disabled').text(elgg.echo('wall:process:posting')).prop('disabled', true);
+					$form.find('[type="submit"]').addClass('elgg-state-disabled').text(i18n.echo('wall:process:posting')).prop('disabled', true);
 					$('body').addClass('elgg-state-loading');
 				},
 				success: function (data) {
 					if (data.status >= 0) {
 						$form.resetForm();
 						if ($('.elgg-input-tokeninput', $form).length) {
-							$('.elgg-input-tokeninput', $form).bind('clear', function (e) {
+							$('.elgg-input-tokeninput', $form).on('clear', function (e) {
 								$(this).tokenInput("clear");
 							}).trigger('clear');
 						}
@@ -175,11 +176,11 @@ define(function (require) {
 					}
 				},
 				error: function () {
-					elgg.register_error(elgg.echo('wall:error:ajax'));
+					elgg.register_error(i18n.echo('wall:error:ajax'));
 				},
 				complete: function () {
 					$('body').removeClass('elgg-state-loading');
-					$form.find('[type="submit"]').removeClass('elgg-state-disabled').text(elgg.echo('wall:post')).prop('disabled', false);
+					$form.find('[type="submit"]').removeClass('elgg-state-disabled').text(i18n.echo('wall:post')).prop('disabled', false);
 				}
 			});
 		},

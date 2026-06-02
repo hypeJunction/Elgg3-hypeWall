@@ -8,7 +8,7 @@ elgg_entity_gatekeeper($guid, 'object', Post::SUBTYPE);
 
 $entity = get_entity($guid);
 if (!$entity->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new \Elgg\Exceptions\Http\EntityPermissionsException();
 }
 
 elgg_push_entity_breadcrumbs($entity);
