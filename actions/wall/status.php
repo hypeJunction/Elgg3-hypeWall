@@ -146,31 +146,30 @@ foreach ($friend_guids as $friend_guid) {
 
 	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypewall', ACCESS_FRIEND);
 	if ($river_access_id && $new_tag) {
-		$ia = elgg_set_ignore_access(true);
-		$friend_wall_tag = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'wall_tag',
-			'owner_guids' => $friend->guid,
-			'container_guids' => $post->guid,
-			'count' => true,
-		]);
-		if (!$friend_wall_tag) {
-			$friend_wall_tag = new WallTag();
-			$friend_wall_tag->owner_guid = $friend->guid;
-			$friend_wall_tag->container_guid = $post->guid;
-			$friend_wall_tag->access_id = $river_access_id;
-			$friend_wall_tag->relationship_id = $new_tag;
-			$friend_wall_tag->save();
-
-			elgg_create_river_item([
-				'view' => 'river/relationship/tagged/create',
-				'action_type' => 'tagged',
-				'subject_guid' => $friend->guid,
-				'object_guid' => $friend_wall_tag->guid,
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($friend, $post, $river_access_id, $new_tag) {
+			$friend_wall_tag = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => 'wall_tag',
+				'owner_guids' => $friend->guid,
+				'container_guids' => $post->guid,
+				'count' => true,
 			]);
-		}
+			if (!$friend_wall_tag) {
+				$friend_wall_tag = new WallTag();
+				$friend_wall_tag->owner_guid = $friend->guid;
+				$friend_wall_tag->container_guid = $post->guid;
+				$friend_wall_tag->access_id = $river_access_id;
+				$friend_wall_tag->relationship_id = $new_tag;
+				$friend_wall_tag->save();
 
-		elgg_set_ignore_access($ia);
+				elgg_create_river_item([
+					'view' => 'river/relationship/tagged/create',
+					'action_type' => 'tagged',
+					'subject_guid' => $friend->guid,
+					'object_guid' => $friend_wall_tag->guid,
+				]);
+			}
+		});
 	}
 }
 
@@ -197,7 +196,8 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 		return false;
 	}
 
-	$bookmark = elgg_new_entity('object', 'bookmarks');
+	$bookmark = new \ElggObject();
+	$bookmark->subtype = 'bookmarks';
 	$bookmark->owner_guid = $poster->guid;
 	$bookmark->container_guid = $container->guid;
 	$bookmark->address = $address;
