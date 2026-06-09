@@ -15,17 +15,17 @@ $upload_guids = (array) get_input('upload_guids', []);
 
 $friend_guids = get_input('friend_guids', '');
 if (!is_array($friend_guids)) {
-	$friend_guids = string_to_tag_array((string) $friend_guids);
+	$friend_guids = elgg_string_to_array((string) $friend_guids);
 }
 
 $attachment_guids = get_input('attachment_guids', '');
 if (!is_array($attachment_guids)) {
-	$attachment_guids = string_to_tag_array((string) $attachment_guids);
+	$attachment_guids = elgg_string_to_array((string) $attachment_guids);
 }
 
 $tags = get_input('tags', '');
 if (!is_array($tags)) {
-	$tags = string_to_tag_array((string) $tags);
+	$tags = elgg_string_to_array((string) $tags);
 }
 
 if (is_callable('hypeapps_extract_tokens')) {
@@ -137,11 +137,11 @@ foreach ($friend_guids as $friend_guid) {
 		continue;
 	}
 
-	$new_tag = add_entity_relationship($friend->guid, 'tagged_in', $post->guid);
-	add_entity_relationship($post->guid, 'access_grant', $friend->guid);
+	$new_tag = $friend->addRelationship($post->guid, 'tagged_in');
+	$post->addRelationship($friend->guid, 'access_grant');
 
 	foreach ($uploads as $upload) {
-		add_entity_relationship($upload->guid, 'access_grant', $friend->guid);
+		$upload->addRelationship($friend->guid, 'access_grant');
 	}
 
 	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypewall', ACCESS_FRIEND);
@@ -196,7 +196,7 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 		return false;
 	}
 
-	$bookmark = new \ElggObject();
+	$bookmark = new \ElggBookmark();
 	$bookmark->subtype = 'bookmarks';
 	$bookmark->owner_guid = $poster->guid;
 	$bookmark->container_guid = $container->guid;

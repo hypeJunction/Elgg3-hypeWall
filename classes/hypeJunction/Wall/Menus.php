@@ -205,7 +205,8 @@ class Menus {
 			return null;
 		}
 
-		$types = get_registered_entity_types('object');
+		$registered = elgg_entity_types_with_capability('searchable');
+		$types = elgg_extract('object', $registered, []);
 
 		if (empty($types)) {
 			return null;

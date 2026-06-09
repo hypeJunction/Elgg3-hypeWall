@@ -2,7 +2,7 @@
 
 $user = elgg_extract('user', $vars);
 
-$user_write_access = get_write_access_array();
+$user_write_access = elgg_get_write_access_array();
 unset($user_write_access[ACCESS_PUBLIC]);
 unset($user_write_access[ACCESS_LOGGED_IN]);
 
