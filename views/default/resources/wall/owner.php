@@ -7,7 +7,7 @@ $post_guids = (array) $request->getParam('post_guids', []);
 
 $user = $request->getUserParam('username');
 if (!$user) {
-	$user = $request->elgg()->session->getLoggedInUser();
+	$user = elgg_get_logged_in_user_entity();
 }
 
 elgg_entity_gatekeeper($user->guid);
