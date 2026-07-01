@@ -106,11 +106,14 @@ class Notifications {
 				$entity->getURL()
 			], $language);
 
-			notify_user($to_guid, $from_guid, $subject, $body, [
+			$recipient = $container;
+			$from = $poster;
+			elgg_notify_user($recipient, 'received', $entity, [
+				'subject' => $subject,
+				'body' => $body,
 				'summary' => $summary,
 				'object' => $entity,
-				'action' => 'received',
-			]);
+			], $from);
 		}
 
 		// Notify tagged users
@@ -145,11 +148,14 @@ class Notifications {
 				$post_url
 			], $language);
 
-			notify_user($to_guid, $from_guid, $subject, $body, [
+			$recipient = $tagged_friend;
+			$from = $poster;
+			elgg_notify_user($recipient, 'tagged', $entity, [
+				'subject' => $subject,
+				'body' => $body,
 				'summary' => $summary,
 				'object' => $entity,
-				'action' => 'tagged',
-			]);
+			], $from);
 		}
 	}
 }

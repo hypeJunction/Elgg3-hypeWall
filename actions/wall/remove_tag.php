@@ -1,7 +1,7 @@
 <?php
 
 $guid = get_input('guid');
-$post = get_entity($guid);
+$post = $guid ? get_entity((int) $guid) : null;
 
 $user = elgg_get_logged_in_user_entity();
 
@@ -9,7 +9,7 @@ if (!$post) {
 	return elgg_error_response(elgg_echo('wall:error:not_found'));
 }
 
-$relationship = check_entity_relationship($user->guid, 'tagged_in', $post->guid);
+$relationship = (get_entity($user->guid)?->getRelationship($post->guid, 'tagged_in') ?? null);
 if (!$relationship instanceof \ElggRelationship) {
 	return elgg_error_response(elgg_echo('wall:remove_tag:error'));
 }

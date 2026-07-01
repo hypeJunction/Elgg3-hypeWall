@@ -9,23 +9,23 @@ $guid = get_input('guid');
 $status = get_input('status', '');
 $title = htmlentities(get_input('title', ''), ENT_QUOTES, 'UTF-8');
 $location = get_input('location');
-$access_id = get_input('access_id', get_default_access());
+$access_id = get_input('access_id', elgg_get_default_access());
 $address = get_input('address');
 $upload_guids = (array) get_input('upload_guids', []);
 
 $friend_guids = get_input('friend_guids', '');
 if (!is_array($friend_guids)) {
-	$friend_guids = string_to_tag_array((string) $friend_guids);
+	$friend_guids = elgg_string_to_array((string) $friend_guids);
 }
 
 $attachment_guids = get_input('attachment_guids', '');
 if (!is_array($attachment_guids)) {
-	$attachment_guids = string_to_tag_array((string) $attachment_guids);
+	$attachment_guids = elgg_string_to_array((string) $attachment_guids);
 }
 
 $tags = get_input('tags', '');
 if (!is_array($tags)) {
-	$tags = string_to_tag_array((string) $tags);
+	$tags = elgg_string_to_array((string) $tags);
 }
 
 if (is_callable('hypeapps_extract_tokens')) {
@@ -34,7 +34,7 @@ if (is_callable('hypeapps_extract_tokens')) {
 	$tags = array_unique(array_merge($tags, $tokens['hashtags']));
 	
 	foreach ($tokens['usernames'] as $username) {
-		$user = get_user_by_username($username);
+		$user = elgg_get_user_by_username($username);
 		$friend_guids[] = $user->guid;
 	}
 	
@@ -137,40 +137,39 @@ foreach ($friend_guids as $friend_guid) {
 		continue;
 	}
 
-	$new_tag = add_entity_relationship($friend->guid, 'tagged_in', $post->guid);
-	add_entity_relationship($post->guid, 'access_grant', $friend->guid);
+	$new_tag = $friend->addRelationship($post->guid, 'tagged_in');
+	$post->addRelationship($friend->guid, 'access_grant');
 
 	foreach ($uploads as $upload) {
-		add_entity_relationship($upload->guid, 'access_grant', $friend->guid);
+		$upload->addRelationship($friend->guid, 'access_grant');
 	}
 
 	$river_access_id = elgg_get_plugin_user_setting('river_access_id', $friend->guid, 'hypewall', ACCESS_FRIEND);
 	if ($river_access_id && $new_tag) {
-		$ia = elgg_set_ignore_access(true);
-		$friend_wall_tag = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'wall_tag',
-			'owner_guids' => $friend->guid,
-			'container_guids' => $post->guid,
-			'count' => true,
-		]);
-		if (!$friend_wall_tag) {
-			$friend_wall_tag = new WallTag();
-			$friend_wall_tag->owner_guid = $friend->guid;
-			$friend_wall_tag->container_guid = $post->guid;
-			$friend_wall_tag->access_id = $river_access_id;
-			$friend_wall_tag->relationship_id = $new_tag;
-			$friend_wall_tag->save();
-
-			elgg_create_river_item([
-				'view' => 'river/relationship/tagged/create',
-				'action_type' => 'tagged',
-				'subject_guid' => $friend->guid,
-				'object_guid' => $friend_wall_tag->guid,
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($friend, $post, $river_access_id, $new_tag) {
+			$friend_wall_tag = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => 'wall_tag',
+				'owner_guids' => $friend->guid,
+				'container_guids' => $post->guid,
+				'count' => true,
 			]);
-		}
+			if (!$friend_wall_tag) {
+				$friend_wall_tag = new WallTag();
+				$friend_wall_tag->owner_guid = $friend->guid;
+				$friend_wall_tag->container_guid = $post->guid;
+				$friend_wall_tag->access_id = $river_access_id;
+				$friend_wall_tag->relationship_id = $new_tag;
+				$friend_wall_tag->save();
 
-		elgg_set_ignore_access($ia);
+				elgg_create_river_item([
+					'view' => 'river/relationship/tagged/create',
+					'action_type' => 'tagged',
+					'subject_guid' => $friend->guid,
+					'object_guid' => $friend_wall_tag->guid,
+				]);
+			}
+		});
 	}
 }
 
@@ -197,7 +196,8 @@ $make_bookmark = function() use ($poster, $container, $address, $post) {
 		return false;
 	}
 
-	$bookmark = elgg_new_entity('object', 'bookmarks');
+	$bookmark = new \ElggBookmark();
+	$bookmark->subtype = 'bookmarks';
 	$bookmark->owner_guid = $poster->guid;
 	$bookmark->container_guid = $container->guid;
 	$bookmark->address = $address;

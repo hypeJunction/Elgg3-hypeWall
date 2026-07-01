@@ -6,12 +6,21 @@ namespace hypeJunction\Wall;
 
 use Elgg\Database\Seeds\Seed;
 
+/**
+ * Seeder for hypewall entities.
+ */
 class Seeder extends Seed {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function getType(): string {
 		return 'hypewall';
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function seed(): void {
 		$this->advance('Seeding hypewall entities...');
 
@@ -37,6 +46,9 @@ class Seeder extends Seed {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function unseed(): void {
 		$batch = elgg_get_entities([
 			'type' => 'object',
@@ -54,12 +66,21 @@ class Seeder extends Seed {
 		}
 	}
 
+	/**
+	 * Register this seeder via the seeds,database event.
+	 *
+	 * @param \Elgg\Event $event Event
+	 * @return mixed
+	 */
 	public static function addSeed(\Elgg\Event $event): mixed {
 		$seeds = $event->getValue();
 		$seeds[] = static::class;
 		return $seeds;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getCountOptions(): array {
 		return [
 			'type' => 'object',

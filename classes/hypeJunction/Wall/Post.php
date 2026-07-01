@@ -234,7 +234,7 @@ class Post extends ElggObject {
 			'relationship' => 'tagged_in',
 			'relationship_guid' => (int) $post->guid,
 			'inverse_relationship' => true,
-			'limit' => \hypeJunction\Graph\Graph::LIMIT_MAX,
+			'limit' => \hypeJunction\Data\Graph::LIMIT_MAX,
 		]);
 	}
 
@@ -247,7 +247,7 @@ class Post extends ElggObject {
 		return new BatchResult('elgg_get_entities', [
 			'relationship' => 'attached',
 			'relationship_guid' => (int) $post->guid,
-			'limit' => \hypeJunction\Graph\Graph::LIMIT_MAX,
+			'limit' => \hypeJunction\Data\Graph::LIMIT_MAX,
 		]);
 	}
 
