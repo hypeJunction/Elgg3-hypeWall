@@ -22,5 +22,5 @@ $layout = elgg_view_layout('default', [
 	'class' => 'elgg-river-layout',
 ]);
 
-echo elgg_view_page(elgg_get_excerpt($entity->description), $layout);
+echo elgg_view_page(elgg_get_excerpt((string) $entity->description), $layout);
 
